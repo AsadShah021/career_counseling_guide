@@ -1,0 +1,92 @@
+/* Centering the entire analytics page */
+.chart-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100vw;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+/* Dropdown Field Container */
+.dropdown-container {
+    width: 80%; /* Increased width */
+    max-width: 600px; /* Set a max width for responsiveness */
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 10;
+}
+
+/* Updated select input width */
+.custom-select {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+}
+
+/* Buttons styling */
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.process-btn, .trending-btn {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.process-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.trending-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+.process-btn:hover, .trending-btn:hover {
+    opacity: 0.85;
+}
+
+/* Chart Container */
+.chart-box {
+    width: 85%;
+    height: 60vh;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.chart-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.chart-wrapper {
+    width: 100%;
+    height: 90%;
+}
+
+/* Loading screen */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 20px;
+}

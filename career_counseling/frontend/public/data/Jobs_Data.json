@@ -1,0 +1,767 @@
+{
+  "labels": ["2018", "2019", "2020", "2021", "2022", "2023", "2024"],
+  "datasets": [
+    {
+      "label": "Accounting & Finance",
+      "data": [30, 32, 35, 38, 40, 45, 50],
+      "borderColor": "blue",
+      "backgroundColor": "rgba(0, 0, 255, 0.2)"
+    },
+    {
+      "label": "Aerospace Engineering",
+      "data": [15, 18, 20, 25, 28, 30, 35],
+      "borderColor": "green",
+      "backgroundColor": "rgba(0, 128, 0, 0.2)"
+    },
+    {
+      "label": "Agriculture",
+      "data": [22, 23, 25, 26, 28, 30, 33],
+      "borderColor": "red",
+      "backgroundColor": "rgba(255, 0, 0, 0.2)"
+    },
+    {
+      "label": "Anthropology",
+      "data": [10, 12, 14, 15, 16, 18, 20],
+      "borderColor": "purple",
+      "backgroundColor": "rgba(128, 0, 128, 0.2)"
+    },
+    {
+      "label": "Animal Sciences",
+      "data": [8, 10, 12, 15, 17, 20, 22],
+      "borderColor": "orange",
+      "backgroundColor": "rgba(255, 165, 0, 0.2)"
+    },
+    {
+      "label": "Architecture",
+      "data": [18, 20, 23, 25, 28, 30, 35],
+      "borderColor": "brown",
+      "backgroundColor": "rgba(165, 42, 42, 0.2)"
+    },
+    {
+      "label": "Associate Degree in Commerce",
+      "data": [25, 27, 30, 33, 35, 38, 40],
+      "borderColor": "cyan",
+      "backgroundColor": "rgba(0, 255, 255, 0.2)"
+    },
+    {
+      "label": "Associate Degree in Computing",
+      "data": [15, 18, 22, 27, 30, 34, 40],
+      "borderColor": "magenta",
+      "backgroundColor": "rgba(255, 0, 255, 0.2)"
+    },
+    {
+      "label": "Avionics Engineering",
+      "data": [12, 14, 17, 20, 22, 25, 28],
+      "borderColor": "gold",
+      "backgroundColor": "rgba(255, 215, 0, 0.2)"
+    },
+    {
+      "label": "BE Civil Engineering",
+      "data": [35, 38, 40, 42, 44, 46, 50],
+      "borderColor": "teal",
+      "backgroundColor": "rgba(0, 128, 128, 0.2)"
+    },
+    {
+      "label": "BE Electrical Engineering",
+      "data": [30, 32, 35, 38, 40, 43, 45],
+      "borderColor": "darkblue",
+      "backgroundColor": "rgba(0, 0, 139, 0.2)"
+    },
+    {
+      "label": "BE Environmental Engineering",
+      "data": [20, 22, 25, 28, 30, 33, 35],
+      "borderColor": "lime",
+      "backgroundColor": "rgba(0, 255, 0, 0.2)"
+    },
+    {
+      "label": "BE Geoinformatics Engineering",
+      "data": [10, 12, 14, 17, 20, 23, 25],
+      "borderColor": "darkred",
+      "backgroundColor": "rgba(139, 0, 0, 0.2)"
+    },
+    {
+      "label": "Biochemistry",
+      "data": [18, 20, 22, 25, 28, 30, 35],
+      "borderColor": "navy",
+      "backgroundColor": "rgba(0, 0, 128, 0.2)"
+    },
+    {
+      "label": "Bioinformatics",
+      "data": [12, 15, 18, 22, 28, 35, 45],
+      "borderColor": "blue",
+      "backgroundColor": "rgba(0, 0, 255, 0.2)"
+    },
+    {
+      "label": "Biomedical Engineering",
+      "data": [10, 12, 15, 18, 22, 26, 30],
+      "borderColor": "green",
+      "backgroundColor": "rgba(0, 128, 0, 0.2)"
+    },
+    {
+      "label": "Biosciences",
+      "data": [14, 16, 18, 20, 23, 26, 30],
+      "borderColor": "red",
+      "backgroundColor": "rgba(255, 0, 0, 0.2)"
+    },
+    {
+      "label": "Biotechnology",
+      "data": [20, 22, 24, 27, 30, 34, 40],
+      "borderColor": "purple",
+      "backgroundColor": "rgba(128, 0, 128, 0.2)"
+    },
+    {
+      "label": "Botany",
+      "data": [8, 10, 12, 14, 15, 18, 20],
+      "borderColor": "orange",
+      "backgroundColor": "rgba(255, 165, 0, 0.2)"
+    },
+    {
+      "label": "BS Accounting & Finance",
+      "data": [25, 27, 30, 33, 36, 40, 45],
+      "borderColor": "brown",
+      "backgroundColor": "rgba(165, 42, 42, 0.2)"
+    },
+    {
+      "label": "BS Arabic",
+      "data": [5, 7, 10, 12, 14, 16, 18],
+      "borderColor": "cyan",
+      "backgroundColor": "rgba(0, 255, 255, 0.2)"
+    },
+    {
+      "label": "BS Artificial Intelligence",
+      "data": [10, 20, 35, 50, 75, 100, 130],
+      "borderColor": "black",
+      "backgroundColor": "rgba(0, 0, 0, 0.2)"
+    },
+    {
+      "label": "BS Balochi",
+      "data": [3, 4, 5, 6, 7, 8, 9],
+      "borderColor": "magenta",
+      "backgroundColor": "rgba(255, 0, 255, 0.2)"
+    },
+    {
+      "label": "BS Bangla",
+      "data": [6, 7, 8, 10, 12, 14, 16],
+      "borderColor": "gold",
+      "backgroundColor": "rgba(255, 215, 0, 0.2)"
+    },
+    {
+      "label": "BS Chinese Language Teaching",
+      "data": [8, 10, 13, 15, 18, 22, 26],
+      "borderColor": "teal",
+      "backgroundColor": "rgba(0, 128, 128, 0.2)"
+    },
+    {
+      "label": "BS Commerce",
+      "data": [22, 24, 27, 30, 34, 38, 42],
+      "borderColor": "darkblue",
+      "backgroundColor": "rgba(0, 0, 139, 0.2)"
+    },
+    {
+      "label": "BS Computer Engineering",
+      "data": [30, 35, 40, 45, 50, 55, 60],
+      "borderColor": "lime",
+      "backgroundColor": "rgba(0, 255, 0, 0.2)"
+    },
+    {
+      "label": "BS Computer Science",
+      "data": [40, 45, 50, 55, 65, 75, 85],
+      "borderColor": "navy",
+      "backgroundColor": "rgba(0, 0, 128, 0.2)"
+    },
+    {
+      "label": "BS Early Childhood Care and Education",
+      "data": [10, 12, 14, 16, 18, 20, 22],
+      "borderColor": "pink",
+      "backgroundColor": "rgba(255, 20, 147, 0.2)"
+    },
+    {
+      "label": "BS Economics",
+      "data": [18, 20, 23, 26, 30, 34, 40],
+      "borderColor": "maroon",
+      "backgroundColor": "rgba(128, 0, 0, 0.2)"
+    },
+    {
+      "label": "BS Economics & Finance (Bridging)",
+      "data": [12, 14, 16, 18, 22, 25, 30],
+      "borderColor": "slategray",
+      "backgroundColor": "rgba(112, 128, 144, 0.2)"
+    },
+    {
+      "label": "BS Economics (Bridging)",
+      "data": [14, 16, 18, 20, 23, 26, 30],
+      "borderColor": "darkgreen",
+      "backgroundColor": "rgba(0, 100, 0, 0.2)"
+    },
+    {
+      "label": "BS Economics and Finance",
+      "data": [15, 18, 20, 23, 26, 30, 35],
+      "borderColor": "indigo",
+      "backgroundColor": "rgba(75, 0, 130, 0.2)"
+    },
+    {
+      "label": "BS Educational Leadership and Management",
+      "data": [8, 10, 12, 14, 16, 18, 20],
+      "borderColor": "deepskyblue",
+      "backgroundColor": "rgba(0, 191, 255, 0.2)"
+    },
+    {
+      "label": "BS Electronics",
+      "data": [20, 22, 24, 26, 28, 30, 35],
+      "borderColor": "goldenrod",
+      "backgroundColor": "rgba(218, 165, 32, 0.2)"
+    },
+    {
+      "label": "BS English",
+      "data": [18, 20, 22, 25, 28, 30, 34],
+      "borderColor": "crimson",
+      "backgroundColor": "rgba(220, 20, 60, 0.2)"
+    },
+    {
+      "label": "BS English (Bridging)",
+      "data": [10, 12, 14, 16, 18, 20, 22],
+      "borderColor": "orchid",
+      "backgroundColor": "rgba(218, 112, 214, 0.2)"
+    },
+    {
+      "label": "BS French",
+      "data": [5, 7, 9, 11, 13, 15, 18],
+      "borderColor": "tomato",
+      "backgroundColor": "rgba(255, 99, 71, 0.2)"
+    },
+    {
+        "label": "BS German",
+        "data": [5, 7, 9, 12, 14, 16, 20],
+        "borderColor": "blue",
+        "backgroundColor": "rgba(0, 0, 255, 0.2)"
+      },
+      {
+        "label": "BS Health and Physical Education",
+        "data": [10, 12, 15, 18, 22, 26, 30],
+        "borderColor": "green",
+        "backgroundColor": "rgba(0, 128, 0, 0.2)"
+      },
+      {
+        "label": "BS History",
+        "data": [8, 10, 12, 14, 16, 18, 20],
+        "borderColor": "red",
+        "backgroundColor": "rgba(255, 0, 0, 0.2)"
+      },
+      {
+        "label": "BS International Relations",
+        "data": [20, 22, 25, 28, 32, 36, 40],
+        "borderColor": "purple",
+        "backgroundColor": "rgba(128, 0, 128, 0.2)"
+      },
+      {
+        "label": "BS Islamic Studies",
+        "data": [15, 17, 20, 22, 25, 28, 32],
+        "borderColor": "orange",
+        "backgroundColor": "rgba(255, 165, 0, 0.2)"
+      },
+      {
+        "label": "BS Islamic Studies (Bridging)",
+        "data": [8, 10, 12, 14, 16, 18, 20],
+        "borderColor": "brown",
+        "backgroundColor": "rgba(165, 42, 42, 0.2)"
+      },
+      {
+        "label": "BS Korean Language & Culture",
+        "data": [6, 8, 10, 13, 16, 20, 25],
+        "borderColor": "cyan",
+        "backgroundColor": "rgba(0, 255, 255, 0.2)"
+      },
+      {
+        "label": "BS Languages and Translation Studies",
+        "data": [12, 14, 16, 19, 22, 25, 30],
+        "borderColor": "black",
+        "backgroundColor": "rgba(0, 0, 0, 0.2)"
+      },
+      {
+        "label": "BS Mathematics",
+        "data": [25, 28, 30, 33, 36, 40, 45],
+        "borderColor": "magenta",
+        "backgroundColor": "rgba(255, 0, 255, 0.2)"
+      },
+      {
+        "label": "BS Mathematics (Bridging)",
+        "data": [14, 16, 18, 20, 23, 26, 30],
+        "borderColor": "gold",
+        "backgroundColor": "rgba(255, 215, 0, 0.2)"
+      },
+      {
+        "label": "BS Media & Communication Studies",
+        "data": [18, 20, 23, 26, 30, 34, 38],
+        "borderColor": "teal",
+        "backgroundColor": "rgba(0, 128, 128, 0.2)"
+      },
+      {
+        "label": "BS Pakistan Studies",
+        "data": [10, 12, 14, 16, 18, 20, 22],
+        "borderColor": "darkblue",
+        "backgroundColor": "rgba(0, 0, 139, 0.2)"
+      },
+      {
+        "label": "BS Pakistan Studies (Bridging)",
+        "data": [5, 7, 9, 11, 13, 15, 18],
+        "borderColor": "lime",
+        "backgroundColor": "rgba(0, 255, 0, 0.2)"
+      },
+      {
+        "label": "BS Pashto",
+        "data": [3, 4, 5, 6, 7, 8, 10],
+        "borderColor": "navy",
+        "backgroundColor": "rgba(0, 0, 128, 0.2)"
+      },
+      {
+        "label": "BS Peace & Conflict Studies",
+        "data": [15, 18, 20, 23, 26, 30, 35],
+        "borderColor": "pink",
+        "backgroundColor": "rgba(255, 20, 147, 0.2)"
+      },
+      {
+        "label": "BS Peace & Conflict Studies (Bridging)",
+        "data": [8, 10, 12, 14, 16, 18, 20],
+        "borderColor": "maroon",
+        "backgroundColor": "rgba(128, 0, 0, 0.2)"
+      },
+      {
+        "label": "BS Persian",
+        "data": [4, 5, 7, 9, 11, 13, 15],
+        "borderColor": "slategray",
+        "backgroundColor": "rgba(112, 128, 144, 0.2)"
+      },
+      {
+        "label": "BS Persian (for Foreigners)",
+        "data": [2, 3, 4, 5, 6, 7, 9],
+        "borderColor": "darkgreen",
+        "backgroundColor": "rgba(0, 100, 0, 0.2)"
+      },
+      {
+        "label": "BS Psychology",
+        "data": [20, 22, 25, 28, 32, 36, 40],
+        "borderColor": "indigo",
+        "backgroundColor": "rgba(75, 0, 130, 0.2)"
+      },
+      {
+        "label": "BS Psychology (Bridging)",
+        "data": [8, 10, 12, 14, 16, 18, 20],
+        "borderColor": "blue",
+        "backgroundColor": "rgba(0, 0, 255, 0.2)"
+      },
+      {
+        "label": "BS Public Administration and Governance",
+        "data": [15, 17, 20, 23, 26, 30, 35],
+        "borderColor": "green",
+        "backgroundColor": "rgba(0, 128, 0, 0.2)"
+      },
+      {
+        "label": "BS Software Engineering",
+        "data": [30, 35, 40, 50, 60, 75, 90],
+        "borderColor": "red",
+        "backgroundColor": "rgba(255, 0, 0, 0.2)"
+      },
+      {
+        "label": "BS Turkish",
+        "data": [6, 8, 10, 12, 14, 16, 20],
+        "borderColor": "purple",
+        "backgroundColor": "rgba(128, 0, 128, 0.2)"
+      },
+      {
+        "label": "BS Urdu",
+        "data": [10, 12, 14, 16, 18, 20, 22],
+        "borderColor": "orange",
+        "backgroundColor": "rgba(255, 165, 0, 0.2)"
+      },
+      {
+        "label": "BS Urdu (Bridging)",
+        "data": [5, 7, 9, 11, 13, 15, 18],
+        "borderColor": "brown",
+        "backgroundColor": "rgba(165, 42, 42, 0.2)"
+      },
+      {
+        "label": "BS Urdu for Foreigners",
+        "data": [3, 4, 5, 6, 7, 8, 10],
+        "borderColor": "cyan",
+        "backgroundColor": "rgba(0, 255, 255, 0.2)"
+      },
+      {
+        "label": "Business Administration",
+        "data": [25, 28, 30, 35, 40, 45, 50],
+        "borderColor": "black",
+        "backgroundColor": "rgba(0, 0, 0, 0.2)"
+      },
+      {
+        "label": "Business Analytics",
+        "data": [12, 15, 20, 25, 30, 38, 45],
+        "borderColor": "magenta",
+        "backgroundColor": "rgba(255, 0, 255, 0.2)"
+      },
+      {
+        "label": "Chemical Engineering",
+        "data": [18, 20, 23, 26, 30, 34, 38],
+        "borderColor": "gold",
+        "backgroundColor": "rgba(255, 215, 0, 0.2)"
+      },
+      {
+        "label": "Chemistry",
+        "data": [20, 22, 24, 26, 30, 34, 40],
+        "borderColor": "teal",
+        "backgroundColor": "rgba(0, 128, 128, 0.2)"
+      },
+      {
+        "label": "Civil Engineering",
+        "data": [30, 32, 35, 38, 40, 42, 45],
+        "borderColor": "darkblue",
+        "backgroundColor": "rgba(0, 0, 139, 0.2)"
+      },
+      {
+        "label": "Computer and Information Sciences",
+        "data": [35, 40, 45, 50, 60, 75, 90],
+        "borderColor": "lime",
+        "backgroundColor": "rgba(0, 255, 0, 0.2)"
+      },
+      {
+        "label": "Cyber Security",
+        "data": [20, 25, 30, 40, 50, 65, 80],
+        "borderColor": "pink",
+        "backgroundColor": "rgba(255, 20, 147, 0.2)"
+      },
+      {
+        "label": "Data Science",
+        "data": [15, 20, 30, 45, 60, 80, 100],
+        "borderColor": "maroon",
+        "backgroundColor": "rgba(128, 0, 0, 0.2)"
+      },
+      {
+        "label": "Defence & Strategic Studies",
+        "data": [8, 10, 12, 14, 16, 18, 20],
+        "borderColor": "slategray",
+        "backgroundColor": "rgba(112, 128, 144, 0.2)"
+      },
+      {
+        "label": "Dental Surgery (BDS)",
+        "data": [12, 14, 16, 18, 20, 22, 25],
+        "borderColor": "darkgreen",
+        "backgroundColor": "rgba(0, 100, 0, 0.2)"
+      },
+      {
+        "label": "Education",
+        "data": [18, 20, 22, 25, 28, 30, 35],
+        "borderColor": "indigo",
+        "backgroundColor": "rgba(75, 0, 130, 0.2)"
+      },
+      {
+        "label": "Electrical Engineering",
+        "data": [28, 30, 35, 38, 42, 45, 50],
+        "borderColor": "goldenrod",
+        "backgroundColor": "rgba(218, 165, 32, 0.2)"
+      },
+      {
+        "label": "Environmental Sciences",
+        "data": [15, 18, 20, 22, 25, 28, 30],
+        "borderColor": "crimson",
+        "backgroundColor": "rgba(220, 20, 60, 0.2)"
+      },
+      {
+        "label": "Food Science and Technology",
+        "data": [12, 15, 18, 22, 26, 30, 35],
+        "borderColor": "orchid",
+        "backgroundColor": "rgba(218, 112, 214, 0.2)"
+      },
+      {
+        "label": "Geology",
+        "data": [10, 12, 14, 16, 18, 20, 22],
+        "borderColor": "tomato",
+        "backgroundColor": "rgba(255, 99, 71, 0.2)"
+      },
+      {
+        "label": "Geophysics",
+        "data": [10, 12, 14, 16, 18, 20, 22],
+        "borderColor": "blue",
+        "backgroundColor": "rgba(0, 0, 255, 0.2)"
+      },
+      {
+        "label": "Horticulture",
+        "data": [8, 10, 12, 15, 18, 22, 25],
+        "borderColor": "green",
+        "backgroundColor": "rgba(0, 128, 0, 0.2)"
+      },
+      {
+        "label": "Industrial Design",
+        "data": [12, 14, 16, 18, 22, 26, 30],
+        "borderColor": "red",
+        "backgroundColor": "rgba(255, 0, 0, 0.2)"
+      },
+      {
+        "label": "Industrial Engineering",
+        "data": [15, 18, 22, 26, 30, 34, 38],
+        "borderColor": "purple",
+        "backgroundColor": "rgba(128, 0, 128, 0.2)"
+      },
+      {
+        "label": "Information Security",
+        "data": [20, 25, 30, 40, 50, 60, 75],
+        "borderColor": "orange",
+        "backgroundColor": "rgba(255, 165, 0, 0.2)"
+      },
+      {
+        "label": "Information Security Engineering",
+        "data": [15, 20, 25, 30, 40, 50, 65],
+        "borderColor": "brown",
+        "backgroundColor": "rgba(165, 42, 42, 0.2)"
+      },
+      {
+        "label": "Information Technology",
+        "data": [30, 35, 40, 50, 60, 75, 90],
+        "borderColor": "cyan",
+        "backgroundColor": "rgba(0, 255, 255, 0.2)"
+      },
+      {
+        "label": "Internet of Things",
+        "data": [10, 15, 25, 35, 50, 70, 90],
+        "borderColor": "black",
+        "backgroundColor": "rgba(0, 0, 0, 0.2)"
+      },
+      {
+        "label": "International Relations",
+        "data": [20, 22, 25, 28, 32, 36, 40],
+        "borderColor": "magenta",
+        "backgroundColor": "rgba(255, 0, 255, 0.2)"
+      },
+      {
+        "label": "Islamic Studies",
+        "data": [15, 17, 20, 22, 25, 28, 32],
+        "borderColor": "gold",
+        "backgroundColor": "rgba(255, 215, 0, 0.2)"
+      },
+      {
+        "label": "Law (LLB)",
+        "data": [18, 20, 23, 26, 30, 35, 40],
+        "borderColor": "teal",
+        "backgroundColor": "rgba(0, 128, 128, 0.2)"
+      },
+      {
+        "label": "Maritime Sciences",
+        "data": [10, 12, 14, 16, 18, 20, 22],
+        "borderColor": "darkblue",
+        "backgroundColor": "rgba(0, 0, 139, 0.2)"
+      },
+      {
+        "label": "Materials Engineering",
+        "data": [12, 15, 18, 22, 26, 30, 35],
+        "borderColor": "lime",
+        "backgroundColor": "rgba(0, 255, 0, 0.2)"
+      },
+      {
+        "label": "Mathematics",
+        "data": [25, 28, 30, 33, 36, 40, 45],
+        "borderColor": "navy",
+        "backgroundColor": "rgba(0, 0, 128, 0.2)"
+      },
+      {
+        "label": "Mechanical Engineering",
+        "data": [30, 32, 35, 38, 40, 42, 45],
+        "borderColor": "pink",
+        "backgroundColor": "rgba(255, 20, 147, 0.2)"
+      },
+      {
+        "label": "Mechatronics Engineering",
+        "data": [15, 18, 20, 25, 30, 35, 40],
+        "borderColor": "maroon",
+        "backgroundColor": "rgba(128, 0, 0, 0.2)"
+      },
+      {
+        "label": "Medicine and Surgery (MBBS)",
+        "data": [40, 45, 50, 55, 60, 65, 70],
+        "borderColor": "slategray",
+        "backgroundColor": "rgba(112, 128, 144, 0.2)"
+      },
+      {
+        "label": "Pharmacy (Pharm-D)",
+        "data": [25, 28, 30, 35, 40, 45, 50],
+        "borderColor": "goldenrod",
+        "backgroundColor": "rgba(218, 165, 32, 0.2)"
+      },
+      {
+        "label": "Physics",
+        "data": [20, 22, 24, 26, 30, 34, 40],
+        "borderColor": "crimson",
+        "backgroundColor": "rgba(220, 20, 60, 0.2)"
+      },
+      {
+        "label": "Plant Sciences",
+        "data": [8, 10, 12, 14, 16, 18, 20],
+        "borderColor": "orchid",
+        "backgroundColor": "rgba(218, 112, 214, 0.2)"
+      },
+      {
+        "label": "Political Science",
+        "data": [15, 18, 20, 22, 25, 28, 32],
+        "borderColor": "blue",
+        "backgroundColor": "rgba(0, 0, 255, 0.2)"
+      },
+      {
+        "label": "Post-RM Science in Midwifery (BScM)",
+        "data": [8, 10, 12, 14, 16, 18, 20],
+        "borderColor": "green",
+        "backgroundColor": "rgba(0, 128, 0, 0.2)"
+      },
+      {
+        "label": "Post-RN Science in Midwifery (BScM)",
+        "data": [10, 12, 15, 18, 20, 22, 25],
+        "borderColor": "red",
+        "backgroundColor": "rgba(255, 0, 0, 0.2)"
+      },
+      {
+        "label": "Post-RN Science in Nursing (BScN)",
+        "data": [12, 14, 16, 20, 24, 28, 35],
+        "borderColor": "purple",
+        "backgroundColor": "rgba(128, 0, 128, 0.2)"
+      },
+      {
+        "label": "Project Management",
+        "data": [18, 20, 23, 26, 30, 35, 40],
+        "borderColor": "orange",
+        "backgroundColor": "rgba(255, 165, 0, 0.2)"
+      },
+      {
+        "label": "Psychology",
+        "data": [20, 22, 24, 26, 30, 34, 40],
+        "borderColor": "brown",
+        "backgroundColor": "rgba(165, 42, 42, 0.2)"
+      },
+      {
+        "label": "Public Administration",
+        "data": [25, 28, 30, 35, 40, 45, 50],
+        "borderColor": "cyan",
+        "backgroundColor": "rgba(0, 255, 255, 0.2)"
+      },
+      {
+        "label": "Railway Engineering",
+        "data": [10, 12, 15, 18, 22, 26, 30],
+        "borderColor": "black",
+        "backgroundColor": "rgba(0, 0, 0, 0.2)"
+      },
+      {
+        "label": "Science in Dental Hygiene (ASDH)",
+        "data": [12, 14, 16, 18, 20, 22, 25],
+        "borderColor": "magenta",
+        "backgroundColor": "rgba(255, 0, 255, 0.2)"
+      },
+      {
+        "label": "Science in Nursing (BScN)",
+        "data": [20, 25, 30, 35, 40, 45, 50],
+        "borderColor": "gold",
+        "backgroundColor": "rgba(255, 215, 0, 0.2)"
+      },
+      {
+        "label": "Science in Nursing (Direct-entry BScN)",
+        "data": [15, 18, 22, 26, 30, 35, 40],
+        "borderColor": "teal",
+        "backgroundColor": "rgba(0, 128, 128, 0.2)"
+      },
+      {
+        "label": "Science in Nursing (Post-RN BScN)",
+        "data": [18, 20, 23, 26, 30, 35, 40],
+        "borderColor": "darkblue",
+        "backgroundColor": "rgba(0, 0, 139, 0.2)"
+      },
+      {
+        "label": "Science in Nursing (Post-RN Science in Nursing)",
+        "data": [12, 14, 16, 18, 20, 22, 25],
+        "borderColor": "lime",
+        "backgroundColor": "rgba(0, 255, 0, 0.2)"
+      },
+      {
+        "label": "Science in Nursing (Post-RN Science in Nursing (BScN))",
+        "data": [10, 12, 15, 18, 20, 22, 25],
+        "borderColor": "navy",
+        "backgroundColor": "rgba(0, 0, 128, 0.2)"
+      },
+      {
+        "label": "Science in Nursing (Science in Nursing (Direct-entry BScN))",
+        "data": [15, 18, 20, 22, 25, 28, 32],
+        "borderColor": "pink",
+        "backgroundColor": "rgba(255, 20, 147, 0.2)"
+      },
+      {
+        "label": "Science in Nursing (Science in Nursing (Post-RN BScN))",
+        "data": [10, 12, 14, 16, 18, 20, 22],
+        "borderColor": "maroon",
+        "backgroundColor": "rgba(128, 0, 0, 0.2)"
+      },
+      {
+        "label": "Science in Nursing (Science in Nursing (Post-RN Science in Nursing (BScN)))",
+        "data": [8, 10, 12, 14, 16, 18, 20],
+        "borderColor": "slategray",
+        "backgroundColor": "rgba(112, 128, 144, 0.2)"
+      },
+      {
+        "label": "Science in Nursing (Direct-entry BScN)",
+        "data": [15, 18, 22, 26, 30, 35, 40],
+        "borderColor": "blue",
+        "backgroundColor": "rgba(0, 0, 255, 0.2)"
+      },
+      {
+        "label": "Science in Nursing (Post-RN BScN)",
+        "data": [18, 20, 23, 26, 30, 35, 40],
+        "borderColor": "red",
+        "backgroundColor": "rgba(255, 0, 0, 0.2)"
+      },
+      {
+        "label": "Science in Nursing (BScN)",
+        "data": [20, 25, 30, 35, 40, 45, 50],
+        "borderColor": "green",
+        "backgroundColor": "rgba(0, 128, 0, 0.2)"
+      },
+      {
+        "label": "Social Sciences",
+        "data": [18, 20, 22, 25, 28, 30, 34],
+        "borderColor": "blue",
+        "backgroundColor": "rgba(0, 0, 255, 0.2)"
+      },
+      {
+        "label": "Social Work",
+        "data": [12, 14, 16, 18, 20, 22, 25],
+        "borderColor": "green",
+        "backgroundColor": "rgba(0, 128, 0, 0.2)"
+      },
+      {
+        "label": "Sociology",
+        "data": [15, 18, 20, 23, 26, 30, 35],
+        "borderColor": "red",
+        "backgroundColor": "rgba(255, 0, 0, 0.2)"
+      },
+      {
+        "label": "Software Engineering",
+        "data": [30, 35, 40, 50, 60, 75, 90],
+        "borderColor": "purple",
+        "backgroundColor": "rgba(128, 0, 128, 0.2)"
+      },
+      {
+        "label": "Statistics",
+        "data": [20, 22, 24, 28, 32, 36, 40],
+        "borderColor": "orange",
+        "backgroundColor": "rgba(255, 165, 0, 0.2)"
+      },
+      {
+        "label": "Studies in Arts and Sciences (BS)",
+        "data": [12, 14, 16, 18, 20, 22, 24],
+        "borderColor": "brown",
+        "backgroundColor": "rgba(165, 42, 42, 0.2)"
+      },
+      {
+        "label": "Tourism and Hospitality Management",
+        "data": [10, 12, 15, 18, 22, 26, 30],
+        "borderColor": "cyan",
+        "backgroundColor": "rgba(0, 255, 255, 0.2)"
+      },
+      {
+        "label": "Tourism Management",
+        "data": [8, 10, 12, 15, 18, 22, 25],
+        "borderColor": "black",
+        "backgroundColor": "rgba(0, 0, 0, 0.2)"
+      }
+  ]
+}

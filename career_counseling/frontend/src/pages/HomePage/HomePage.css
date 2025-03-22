@@ -1,0 +1,82 @@
+/* Display Calculated Merit */
+.calculated-merit {
+    margin: 20px 0;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    width: 60%;
+    max-width: 400px;
+    text-align: center;
+    border: 2px solid #ddd;
+}
+
+/* Adjust Inputs & Button Alignment */
+.input-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+/* Inputs */
+.input-field {
+    width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* GO Button */
+.go-button {
+    background: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.go-button:hover {
+    background: #0056b3;
+}
+
+/* Universities List */
+.university-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.university-btn {
+    background: #ddd;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.university-btn:hover {
+    background: #bbb;
+}
+
+.no-results {
+    font-size: 14px;
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}

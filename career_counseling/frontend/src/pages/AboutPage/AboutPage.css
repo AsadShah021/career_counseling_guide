@@ -1,0 +1,53 @@
+/* Full-Screen Layout */
+.about-us-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background: url("../assets/image.png") center/cover no-repeat, #ffffff; /* Full-page background */
+    padding: 60px;
+}
+
+/* About Us Content Container */
+.about-container {
+    max-width: 90%;
+    width: 100%;
+    max-width: 1000px; /* Increased width */
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.9); /* Light background for readability */
+    border-radius: 10px;
+    /* Removed Box Shadow */
+}
+
+/* About Us Title */
+.about-title {
+    font-size: 3rem; /* Increased font size */
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+/* Paragraph Styling */
+.about-container p {
+    font-size: 1.4rem; /* Increased font size */
+    line-height: 1.8;
+    text-align: justify;
+    color: #222; /* Darker text for readability */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-container {
+        padding: 30px;
+    }
+
+    .about-title {
+        font-size: 2.5rem;
+    }
+
+    .about-container p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+    }
+}

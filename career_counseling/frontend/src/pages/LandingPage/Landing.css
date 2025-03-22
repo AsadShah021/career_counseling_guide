@@ -1,0 +1,130 @@
+/* Landing Page Container */
+.landing-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+/* Left Section - Video */
+.left-section {
+    width: 50%;
+    position: relative;
+    overflow: hidden;
+}
+
+.background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Right Section - Buttons & Content */
+.right-section {
+    width: 50%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+/* Buttons at Top Right */
+.buttons-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Button Styling */
+.btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 24px; /* Increased padding for better appearance */
+    border-radius: 8px; /* More rounded edges */
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific Button Styles */
+.signup-btn {
+    background: #28a745;
+}
+
+.login-btn {
+    background: #17a2b8;
+}
+
+/* Hover Effects */
+.btn:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+/* Click Effect */
+.btn:active {
+    transform: scale(0.95);
+}
+
+/* Content */
+.content h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.content p {
+    font-size: 1.2rem;
+    color: #555;
+    animation: slideIn 1.2s ease-in-out;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .landing-container {
+        flex-direction: column;
+    }
+
+    .left-section, .right-section {
+        width: 100%;
+        height: 50%;
+    }
+
+    .buttons-container {
+        top: 10px;
+        right: 10px;
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .content h1 {
+        font-size: 1.5rem;
+    }
+
+    .content p {
+        font-size: 1rem;
+    }
+}

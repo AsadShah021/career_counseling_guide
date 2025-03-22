@@ -1,0 +1,136 @@
+/* Apply Cambria Font */
+* {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+/* Full-Screen Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal Container */
+.modal-container {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 30px;
+    border-radius: 12px;
+    width: 350px;
+    max-width: 90%;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.4s ease-in-out;
+    position: relative;
+    text-align: center;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #fff;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
+    color: #ff4d4d;
+}
+
+/* Modal Title */
+.modal-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: white;
+}
+
+/* Form Group */
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* Input Field */
+.form-group input {
+    width: 100%;
+    padding: 18px 12px 6px 12px;  /* Adjust padding to align text properly */
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+    font-size: 16px;
+    background: transparent;
+    color: white;
+    outline: none;
+    transition: 0.3s;
+}
+
+/* Floating Label Positioned at Bottom */
+.form-group label {
+    position: absolute;
+    left: 14px;
+    top: 16px; /* Start label at the baseline of the input */
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: 0.3s ease-in-out;
+    pointer-events: none;
+    background: transparent;
+    padding: 0 4px;
+}
+
+/* Floating Label Animation */
+.form-group input:focus + label,
+.form-group input:not(:placeholder-shown) + label {
+    top: 4px;  /* Move label to the top of input */
+    font-size: 12px;
+    color: #007bff;
+    background: none;
+}
+
+/* Focus Effect */
+.form-group input:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5);
+}
+
+/* Submit Button */
+.btn-submit {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.btn-submit:hover {
+    background: linear-gradient(135deg, #0056b3, #003d80);
+    transform: scale(1.05);
+    box-shadow: 0px 0px 12px rgba(0, 91, 187, 0.8);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-container {
+        width: 90%;
+    }
+}

@@ -1,0 +1,94 @@
+/* Full Page Styling */
+.contact-us-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
+    background-color: #ffffff; /* White background */
+    color: #000000; /* Black text */
+}
+
+/* Contact Container */
+.contact-container {
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Contact Title */
+.contact-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #000000; /* Black text */
+}
+
+/* Contact Form */
+.contact-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Form Inputs */
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9; /* Light gray input background */
+    color: #333;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Placeholder Styling */
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #666;
+}
+
+/* Input Focus */
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Send Button */
+.send-button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Send Button Hover */
+.send-button:hover {
+    background-color: #000;
+    transform: scale(1.05);
+}
+
+/* Arrow Styling */
+.send-button .arrow {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-left: 5px;
+}
