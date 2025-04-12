@@ -18,7 +18,10 @@ mongoose.connect(process.env.DATABASE_URL, {
 
 // Import Routes
 const authRoutes = require("./src/routes/authRoutes");
+const contactRoutes = require("./src/routes/contactRoutes"); // Import contact routes
+
 app.use("/api/auth", authRoutes);
+app.use("/api/contact", contactRoutes); // Register contact route
 
 // Start Server
 const PORT = process.env.PORT || 5000;

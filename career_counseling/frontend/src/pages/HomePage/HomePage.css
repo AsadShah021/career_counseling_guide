@@ -1,82 +1,98 @@
-/* Display Calculated Merit */
-.calculated-merit {
-    margin: 20px 0;
-    padding: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    background-color: #f8f8f8;
-    border-radius: 5px;
-    width: 60%;
-    max-width: 400px;
-    text-align: center;
-    border: 2px solid #ddd;
+/* Ensure content starts below navbar */
+.homepage-container {
+    padding-top: 150px; /* Adjust this to push content below navbar */
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
-/* Adjust Inputs & Button Alignment */
-.input-row {
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2); /* Reduce darkness */
+    backdrop-filter: blur(5px); /* Soft blur effect */
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
     justify-content: center;
-    margin-bottom: 15px;
+    align-items: center;
+    z-index: 999;
 }
 
-/* Inputs */
-.input-field {
-    width: 200px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow-y: auto; /* Allow scrolling inside modal if needed */
+    max-height: 90vh; /* Prevent modal from exceeding viewport height */
 }
 
-/* GO Button */
-.go-button {
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* University List in Modal */
+.university-item {
+    display: flex;
+    align-items: center;
+    background: #f4f4f4;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+}
+
+.university-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-right: 15px;
+}
+
+.university-info h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.university-info p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.visit-btn {
     background: #007bff;
     color: white;
-    padding: 10px 15px;
     border: none;
-    border-radius: 5px;
+    padding: 5px 10px;
     cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
+    border-radius: 5px;
+    font-size: 14px;
 }
 
-.go-button:hover {
+.visit-btn:hover {
     background: #0056b3;
 }
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
 
-/* Universities List */
-.university-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.university-btn {
-    background: #ddd;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: left;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.university-btn:hover {
-    background: #bbb;
-}
-
-.no-results {
-    font-size: 14px;
-    color: red;
-    margin-top: 10px;
-    text-align: center;
+    .homepage-container {
+        padding-top: 120px;
+    }
 }

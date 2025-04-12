@@ -1,92 +1,115 @@
-/* Centering the entire analytics page */
-.chart-container {
+/* 1) Basic resets */
+body, html {
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  /* 2) Container that holds everything (title, chart, etc.) */
+  .chart-container {
+    /* Add top margin so it's not flush against the navbar */
+    margin: 80px auto 0 auto; 
+    /* You can tweak 80px as needed */
+  
+    /* Max width for horizontal centering and responsiveness */
+    max-width: 1200px;
+  
+    /* Provide enough vertical space so chart can center nicely */
+    min-height: 60vh; 
+    width: 100%;
+    /*background-color: #f4f4f4; */
+    padding: 20px;
+    box-sizing: border-box;
+  
+    /* Flex center both horizontally & vertically */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    width: 100vw;
-    background-color: #f4f4f4;
+  }
+  
+  /* 3) The actual chart box */
+  .chart-box {
+    /* Make the chart box wider */
+    width: 95%;            /* or 100% for full width */
+    max-width: 1400px;     /* or remove this line entirely */
+    height: 40vh; 
+    background-color: #ffffff;
     padding: 20px;
-}
-
-/* Dropdown Field Container */
-.dropdown-container {
-    width: 80%; /* Increased width */
-    max-width: 600px; /* Set a max width for responsiveness */
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(10, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto; 
+  }
+  
+  
+  /* 4) The chart wrapper inside the box */
+  .chart-wrapper {
+    width: 100%;
+    /* Adjust the height portion so the chart doesn't overflow */
+    height: 80%; 
+  }
+  
+  /* Buttons, selects, etc. remain unchanged */
+  .dropdown-container {
+    width: 80%;
+    max-width: 600px;
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
     position: relative;
     z-index: 10;
-}
-
-/* Updated select input width */
-.custom-select {
+  }
+  
+  .custom-select {
     width: 100%;
     height: 40px;
     font-size: 16px;
-}
-
-/* Buttons styling */
-.button-group {
+  }
+  
+  .button-group {
     display: flex;
     gap: 15px;
     margin-bottom: 20px;
-}
-
-.process-btn, .trending-btn {
+  }
+  
+  .process-btn, .trending-btn {
     padding: 12px 20px;
     font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-}
-
-.process-btn {
+  }
+  
+  .process-btn {
     background-color: #007bff;
     color: white;
-}
-
-.trending-btn {
+  }
+  
+  .trending-btn {
     background-color: #28a745;
     color: white;
-}
-
-.process-btn:hover, .trending-btn:hover {
+  }
+  
+  .process-btn:hover, .trending-btn:hover {
     opacity: 0.85;
-}
-
-/* Chart Container */
-.chart-box {
-    width: 85%;
-    height: 60vh;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.chart-title {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.chart-wrapper {
-    width: 100%;
-    height: 90%;
-}
-
-/* Loading screen */
-.loading-container {
+  }
+  
+  /* Loading screen if needed */
+  .loading-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     font-size: 20px;
+  }
+  .chart-wrapper canvas {
+    image-rendering: crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
 }
+
+  

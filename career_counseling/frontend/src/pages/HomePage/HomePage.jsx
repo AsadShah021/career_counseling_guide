@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import DropdownFields from "../../components/DropdownFields";
+import universityLogos from "../../assets/logos.json"; // JSON file
 import "./HomePage.css";
 
 const HomePage = () => {
@@ -7,6 +8,7 @@ const HomePage = () => {
     const [marks, setMarks] = useState({ matric: "", fsc: "", nts: "" });
     const [universityList, setUniversityList] = useState([]);
     const [calculatedMerit, setCalculatedMerit] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Handle input changes
     const handleMarksChange = (e) => {
@@ -51,9 +53,16 @@ const HomePage = () => {
                 .slice(0, 5); // Take top 5 universities
 
             setUniversityList(matchedUniversities);
+            setIsModalOpen(true); // Open modal after results
         } catch (error) {
             console.error("Error fetching data:", error);
         }
+    };
+
+    // Function to fetch the logo path from JSON
+    const getLogo = (institutionName) => {
+        const logoPath = universityLogos[institutionName];
+        return logoPath ? logoPath : "/assets/logo/default_logo.png"; // Fallback logo
     };
 
     return (
@@ -78,20 +87,37 @@ const HomePage = () => {
                         <p>Your Calculated Merit: <strong>{calculatedMerit}%</strong></p>
                     </div>
                 )}
-
-                {/* University List */}
-                <div className="university-list">
-                    {universityList.length > 0 ? (
-                        universityList.map((uni, index) => (
-                            <button key={index} className="university-btn" onClick={() => window.open(uni.Admission_Link, "_blank")}>
-                                {uni.Institution_Name} - {uni.Field_of_Study} <span>▶</span>
-                            </button>
-                        ))
-                    ) : (
-                        <p className="no-results">No matching universities found.</p>
-                    )}
-                </div>
             </div>
+
+            {/* University Results Modal */}
+            {isModalOpen && (
+                <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="close-modal" onClick={() => setIsModalOpen(false)}>✖</button>
+                        <h2>Recommended Universities</h2>
+                        {universityList.length > 0 ? (
+                            universityList.map((uni, index) => (
+                                <div key={index} className="university-item">
+                                    <img 
+                                        src={getLogo(uni.Institution_Name)} 
+                                        alt={`${uni.Institution_Name} Logo`} 
+                                        className="university-logo" 
+                                    />
+                                    <div className="university-info">
+                                        <h3>{uni.Institution_Name}</h3>
+                                        <p>{uni.Field_of_Study}</p>
+                                        <button className="visit-btn" onClick={() => window.open(uni.Admission_Link, "_blank")}>
+                                            Visit University
+                                        </button>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <p className="no-results">No matching universities found.</p>
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

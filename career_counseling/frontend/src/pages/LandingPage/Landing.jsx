@@ -1,50 +1,108 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react"; // ✅ add useEffect
 import Signup from "../Signup/Signup";
 import Login from "../LoginPage/Login";
 import "./Landing.css";
 
-const Landing = () => {
+// Import images
+import img1 from "../../assets/career_logo.png";
+import img2 from "../../assets/logo_02.png";
+import img3 from "../../assets/logo_03.png";
+import img4 from "../../assets/logo_04.png";
+import img5 from "../../assets/logo_05.png";
+
+const Landing = ({ setIsAuthenticated }) => {
   const [showSignup, setShowSignup] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const images = [img1, img2, img3, img4, img5];
+
+  const nextSlide = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  // ✅ Auto-slide every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 3000); // 3 seconds
+    return () => clearInterval(interval); // Cleanup
+  }, [currentImageIndex]); // rerun when currentImageIndex changes
 
   return (
     <div className="landing-container">
-      {/* Left Section with Video */}
+      {/* Left Section with Carousel */}
       <div className="left-section">
-        <video autoPlay loop muted className="background-video">
-          <source src="/assets/Animation - 1742379380832.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <div className="carousel">
+          <div
+            className="carousel-track"
+            style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
+          >
+            {images.map((img, index) => (
+              <img
+                key={index}
+                src={img}
+                alt={`Slide ${index}`}
+                className="carousel-slide"
+              />
+            ))}
+          </div>
+          
+          <div className="carousel-dots">
+            {images.map((_, index) => (
+              <span
+                key={index}
+                className={`dot ${index === currentImageIndex ? "active" : ""}`}
+                onClick={() => setCurrentImageIndex(index)}
+              />
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* Right Section with Buttons & Content */}
+      {/* Right Section */}
       <div className="right-section">
-        {/* Buttons at Top-Right */}
         <div className="buttons-container">
-          <button className="btn" onClick={() => setShowLogin(true)}>Login</button>
-          <button className="btn signup-btn" onClick={() => setShowSignup(true)}>Sign Up</button>
+          <button className="btn" onClick={() => setShowLogin(true)}>
+            Login
+          </button>
+          <button
+            className="btn signup-btn"
+            onClick={() => setShowSignup(true)}
+          >
+            Sign Up
+          </button>
         </div>
 
-        {/* Dummy Text with Smooth Transition */}
         <div className="content">
           <h1>Welcome to Our Platform</h1>
           <p>
-            Discover amazing features and enjoy a seamless experience. 
-            Sign up today to explore more.
+            Choosing the right career is one of the most important decisions in
+            a student's life. Our career counseling platform is designed to help
+            students in Pakistan find the best field based on their marks,
+            interests, and future opportunities. We provide expert advice,
+            university admission details, and insights into different career
+            paths to make this decision easier for you. With our platform,
+            students can explore field trends, compare different options, and
+            access university application links all in one place. Our goal is to
+            guide students toward a successful future by providing the right
+            information at the right time. Start your journey with us today and
+            take the first step toward a bright career!
           </p>
         </div>
       </div>
 
-      {/* Signup Modal (Closes & Opens Login on Success) */}
+      {/* Modals */}
       {showSignup && (
-        <Signup 
-          onClose={() => setShowSignup(false)} 
-          openLogin={() => setShowLogin(true)} 
+        <Signup
+          onClose={() => setShowSignup(false)}
+          openLogin={() => setShowLogin(true)}
         />
       )}
-
-      {/* Login Modal */}
-      {showLogin && <Login onClose={() => setShowLogin(false)} />}
+      {showLogin && (
+        <Login
+          onClose={() => setShowLogin(false)}
+          setIsAuthenticated={setIsAuthenticated}
+        />
+      )}
     </div>
   );
 };

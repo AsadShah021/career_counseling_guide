@@ -1,24 +1,40 @@
-/* Landing Page Container */
-.landing-container {
-    display: flex;
-    height: 100vh;
-    width: 100%;
-}
-
-/* Left Section - Video */
-.left-section {
-    width: 50%;
-    position: relative;
+body {
+    margin: 0;
+    padding: 0; /* set to zero */
+    box-sizing: border-box;
     overflow: hidden;
 }
 
-.background-video {
+/* Landing Page Container */
+.landing-container {
+    display: flex;
+    height: 100vh;  /* Full screen height */
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative; /* So we can place absolutely positioned elements within it */
 }
 
-/* Right Section - Buttons & Content */
+/* Left Section */
+.left-section {
+    width: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;  /* Align illustration near the top */
+    overflow: hidden;
+}
+
+/* Center the illustration horizontally, near the top vertically */
+.left-section img {
+    max-width: 80%;
+    height: auto;
+    object-fit: contain;
+    margin-top: 20px;  /* optional small gap from the top if needed */
+}
+
+/* Right Section */
 .right-section {
     width: 50%;
     background: white;
@@ -26,18 +42,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
     text-align: center;
     position: relative;
+    /* Remove extra padding if you want the content near the top as well */
 }
 
-/* Buttons at Top Right */
+/* Buttons at Top Right - absolutely positioned relative to the container */
 .buttons-container {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 20px;   /* 20px from the very top of the page/container */
+    right: 20px; /* 20px from the right edge */
     display: flex;
     gap: 10px;
+    z-index: 999; /* Ensure buttons appear on top */
 }
 
 /* Button Styling */
@@ -45,8 +62,8 @@
     background: #007bff;
     color: white;
     border: none;
-    padding: 12px 24px; /* Increased padding for better appearance */
-    border-radius: 8px; /* More rounded edges */
+    padding: 12px 24px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
@@ -54,7 +71,6 @@
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Specific Button Styles */
 .signup-btn {
     background: #28a745;
 }
@@ -63,67 +79,116 @@
     background: #17a2b8;
 }
 
-/* Hover Effects */
+/* Hover & Click Effects */
 .btn:hover {
     opacity: 0.9;
     transform: scale(1.05);
 }
 
-/* Click Effect */
 .btn:active {
     transform: scale(0.95);
 }
 
-/* Content */
+
 .content h1 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    animation: fadeIn 1s ease-in-out;
+    font-size: 2.4rem;
+    text-align: left;
+    margin-bottom: 1rem;
+    color: #333;
 }
 
 .content p {
     font-size: 1.2rem;
+    text-align: justify;
     color: #555;
-    animation: slideIn 1.2s ease-in-out;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Carousel or additional images remain unchanged */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+    position: absolute;
+    bottom: 10px; /* ✨ Stick it to the bottom of carousel */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+  
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #bbb;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.dot.active {
+    background-color: #333;
+}
+.carousel-image {
+    width: 60%;           /* reduced from 80% */
+    height: auto;
+    max-height: 800px;    /* reduced from 800px */
+    object-fit: contain;
+    border-radius: 10px;
+    margin: auto;
 }
 
-@keyframes slideIn {
-    from { opacity: 0; transform: translateX(-20px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
+.carousel {
+    padding-top: 20px;
+    width: 100%;
+    height: 85%;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* ✨ Keep image and dots stacked */
+  }
+  
+  
+  .carousel-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s ease-in-out;
+  }
+  
+  .carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  
+  
 /* Responsive Design */
 @media (max-width: 768px) {
     .landing-container {
         flex-direction: column;
+        height: auto; /* let content dictate height on small screens */
     }
-
     .left-section, .right-section {
         width: 100%;
-        height: 50%;
+        height: auto;
+        align-items: center; /* center on smaller screens if desired */
     }
-
     .buttons-container {
         top: 10px;
         right: 10px;
         flex-direction: column;
     }
-
     .btn {
         width: 100%;
         text-align: center;
     }
-
     .content h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
-
     .content p {
         font-size: 1rem;
     }

@@ -105,7 +105,18 @@ const AnalyticsPage = () => {
         title: { display: true, text: "Years" },
       },
     },
-  };
+    elements: {
+      line: {
+        borderWidth: 1.5, // Reduce thickness for sharper lines
+        tension: 0, // Remove curve effect to make lines straight
+      },
+      point: {
+        radius: 3, // Adjust point size for better visibility
+        borderWidth: 1, // Make points sharper
+      },
+    },
+};
+
 
   return (
     <div className="chart-container">

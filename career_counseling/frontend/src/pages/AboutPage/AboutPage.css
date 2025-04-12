@@ -1,3 +1,6 @@
+body{
+    overflow-x: hidden;
+}
 /* Full-Screen Layout */
 .about-us-page {
     display: flex;
@@ -6,19 +9,29 @@
     height: 100vh;
     width: 100vw;
     background: url("../assets/image.png") center/cover no-repeat, #ffffff; /* Full-page background */
-    padding: 60px;
+    
+
+
 }
 
 /* About Us Content Container */
 .about-container {
-    max-width: 90%;
+    max-width: 1000px;
     width: 100%;
-    max-width: 1000px; /* Increased width */
     padding: 40px;
-    background: rgba(255, 255, 255, 0.9); /* Light background for readability */
     border-radius: 10px;
-    /* Removed Box Shadow */
-}
+  
+    /* Single smaller image centered both horizontally & vertically, no repeat */
+    background: url("/image.png") no-repeat center center;
+  
+    /* Fixed size so it doesn't fill entire container */
+    background-size: 250px auto;  /* adjust 240px as needed */
+  
+    /* Light overlay for readability (optional) */
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  
+  
 
 /* About Us Title */
 .about-title {
@@ -30,7 +43,7 @@
 
 /* Paragraph Styling */
 .about-container p {
-    font-size: 1.4rem; /* Increased font size */
+    font-size: 1.1rem; /* Increased font size */
     line-height: 1.8;
     text-align: justify;
     color: #222; /* Darker text for readability */
