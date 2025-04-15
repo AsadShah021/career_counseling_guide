@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { GoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom";
 import "./AdminSignUp.css";
 
 const AdminSignUp = ({ onClose }) => {
@@ -10,6 +11,7 @@ const AdminSignUp = ({ onClose }) => {
     password: "",
   });
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,6 +27,7 @@ const AdminSignUp = ({ onClose }) => {
 
         setTimeout(() => {
           if (onClose) onClose();
+          else navigate("/admin");
         }, 1500);
       } else {
         setMessage("⚠️ Signup failed. Please try again.");
@@ -46,6 +49,7 @@ const AdminSignUp = ({ onClose }) => {
         setMessage("✅ Google Admin Signup successful!");
         setTimeout(() => {
           if (onClose) onClose();
+          else navigate("/admin");
         }, 1500);
       } else {
         setMessage("⚠️ Unexpected response from server.");
@@ -56,10 +60,16 @@ const AdminSignUp = ({ onClose }) => {
     }
   };
 
+  // ✅ Close button fallback to /admin if onClose prop isn't passed
+  const handleClose = () => {
+    if (onClose) onClose();
+    else navigate("/admin");
+  };
+
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay" onClick={handleClose}>
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-        <button className="close-btn" onClick={onClose}>
+        <button className="close-btn" onClick={handleClose}>
           &times;
         </button>
         <h2 className="modal-title">Admin Sign Up</h2>

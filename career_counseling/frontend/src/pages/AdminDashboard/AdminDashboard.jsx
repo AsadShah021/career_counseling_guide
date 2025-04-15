@@ -4,8 +4,10 @@ import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
+  const [contacts, setContacts] = useState([]);
   const navigate = useNavigate();
 
+  // Fetch users
   const fetchUsers = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/users");
@@ -16,8 +18,20 @@ const AdminDashboard = () => {
     }
   };
 
+  // Fetch contact messages
+  const fetchContacts = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/contact");
+      const data = await res.json();
+      setContacts(data);
+    } catch (err) {
+      console.error("Error fetching contacts:", err);
+    }
+  };
+
   useEffect(() => {
     fetchUsers();
+    fetchContacts();
   }, []);
 
   const handleDelete = async (id) => {
@@ -49,8 +63,8 @@ const AdminDashboard = () => {
         </button>
       </div>
 
+      {/* USERS SECTION */}
       <h2 className="section-heading">📋 Registered Users</h2>
-
       {users.length === 0 ? (
         <p className="no-users">No users found.</p>
       ) : (
@@ -73,11 +87,37 @@ const AdminDashboard = () => {
                   <button
                     className="delete-btn"
                     onClick={() => handleDelete(user._id)}
-                    title="Delete User"
                   >
                     🗑️
                   </button>
                 </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
+      {/* CONTACT MESSAGES SECTION */}
+      <h2 className="section-heading">📨 Contact Messages</h2>
+      {contacts.length === 0 ? (
+        <p className="no-users">No messages found.</p>
+      ) : (
+        <table className="user-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contacts.map((contact, index) => (
+              <tr key={contact._id}>
+                <td>{index + 1}</td>
+                <td>{contact.name}</td>
+                <td>{contact.email}</td>
+                <td>{contact.message}</td>
               </tr>
             ))}
           </tbody>
