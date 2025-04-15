@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
   const fetchUsers = async () => {
     try {
@@ -25,7 +27,7 @@ const AdminDashboard = () => {
           method: "DELETE",
         });
         if (res.ok) {
-          fetchUsers(); // Refresh users after deletion
+          fetchUsers(); // Refresh after deletion
         } else {
           alert("Failed to delete user.");
         }
@@ -37,7 +39,16 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <h1 className="dashboard-title">Admin Dashboard</h1>
+      <div className="top-bar">
+        <h1 className="dashboard-title">Admin Dashboard</h1>
+        <button
+          className="auth-btn signup-btn"
+          onClick={() => navigate("/admin/signup")}
+        >
+          Admin Signup
+        </button>
+      </div>
+
       <h2 className="section-heading">📋 Registered Users</h2>
 
       {users.length === 0 ? (

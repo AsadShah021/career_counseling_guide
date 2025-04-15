@@ -7,7 +7,8 @@ import HomePage from "./pages/HomePage/HomePage";
 import AnalyticsPage from "./pages/AnalyticsPage/AnalyticsPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import ContactPage from "./pages/ContactPage/ContactPage";
-import AdminDashboard from "./pages/AdminDashboard/AdminDashboard"; // ✅ Import
+import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
+import AdminSignUp from "./pages/AdminSignUp/AdminSignUp"; // ✅ Added admin signup route
 
 import LayoutWithFooter from "./components/LayoutWithFooter";
 
@@ -41,8 +42,9 @@ const App = () => {
             }
           />
 
-          {/* ✅ Public route for Admin Dashboard */}
+          {/* Public Admin Routes */}
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/signup" element={<AdminSignUp />} /> {/* ✅ New route */}
 
           {/* Protected Routes with Footer */}
           <Route element={<LayoutWithFooter isAuthenticated={isAuthenticated} />}>

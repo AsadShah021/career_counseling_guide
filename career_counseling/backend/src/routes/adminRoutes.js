@@ -23,9 +23,14 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// Google Admin Signup
+// ✅ Google Admin Signup with Debugging
 router.post("/google-signup", async (req, res) => {
   const { credential } = req.body;
+
+  if (!credential) {
+    return res.status(400).json({ message: "Missing credential in request body" });
+  }
+
   try {
     const ticket = await client.verifyIdToken({
       idToken: credential,
@@ -35,6 +40,8 @@ router.post("/google-signup", async (req, res) => {
     const payload = ticket.getPayload();
     const { email, name } = payload;
 
+    console.log("✅ Google payload decoded:", { name, email });
+
     const existing = await Admin.findOne({ email });
     if (existing) {
       return res.status(400).json({ message: "Admin already exists" });
@@ -42,14 +49,16 @@ router.post("/google-signup", async (req, res) => {
 
     const admin = new Admin({ name, email, password: "google-oauth" });
     await admin.save();
+    console.log("✅ Admin saved:", admin);
+
     res.status(201).json({ message: "Google Admin created" });
   } catch (error) {
-    console.error("Google Admin Signup Error:", error.message);
+    console.error("Google Admin Signup Error:", error);
     res.status(400).json({ message: "Google signup failed", error: error.message });
   }
 });
 
-// You can keep your existing /users route too
+// Optional: Get all admin users (for admin dashboard)
 router.get("/users", async (req, res) => {
   try {
     const users = await Admin.find({}, "name email");
