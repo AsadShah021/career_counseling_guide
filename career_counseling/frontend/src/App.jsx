@@ -1,99 +1,71 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import NavbarVisibility from "./components/NavbarVisibility";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
- // the helper component
 import Landing from "./pages/LandingPage/Landing";
 import HomePage from "./pages/HomePage/HomePage";
 import AnalyticsPage from "./pages/AnalyticsPage/AnalyticsPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import ContactPage from "./pages/ContactPage/ContactPage";
+import AdminDashboard from "./pages/AdminDashboard/AdminDashboard"; // ✅ Import
 
+import LayoutWithFooter from "./components/LayoutWithFooter";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
       setIsAuthenticated(true);
     }
     setLoading(false);
   }, []);
 
-  if (loading) {
-    return null; // or a loading spinner
-  }
+  if (loading) return null;
 
   return (
-    <Router>
-      {/* Instead of isAuthenticated && <Navbar /> */}
-      <NavbarVisibility isAuthenticated={isAuthenticated} />
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <Router>
+        <Routes>
+          {/* Public - No Footer */}
+          <Route
+            path="/"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/home" replace />
+              ) : (
+                <Landing setIsAuthenticated={setIsAuthenticated} />
+              )
+            }
+          />
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            isAuthenticated ? (
-              <Navigate to="/home" replace />
-            ) : (
-              <Landing setIsAuthenticated={setIsAuthenticated} />
-            )
-          }
-        />
-        <Route
-          path="/landing"
-          element={
-            isAuthenticated ? (
-              <Landing />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-        <Route
-          path="/home"
-          element={
-            isAuthenticated ? (
-              <HomePage />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-        <Route
-          path="/analytics"
-          element={
-            isAuthenticated ? (
-              <AnalyticsPage />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            isAuthenticated ? (
-              <AboutPage />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            isAuthenticated ? (
-              <ContactPage />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-      </Routes>
-    </Router>
+          {/* ✅ Public route for Admin Dashboard */}
+          <Route path="/admin" element={<AdminDashboard />} />
+
+          {/* Protected Routes with Footer */}
+          <Route element={<LayoutWithFooter isAuthenticated={isAuthenticated} />}>
+            <Route
+              path="/home"
+              element={isAuthenticated ? <HomePage /> : <Navigate to="/" replace />}
+            />
+            <Route
+              path="/analytics"
+              element={isAuthenticated ? <AnalyticsPage /> : <Navigate to="/" replace />}
+            />
+            <Route
+              path="/about"
+              element={isAuthenticated ? <AboutPage /> : <Navigate to="/" replace />}
+            />
+            <Route
+              path="/contact"
+              element={isAuthenticated ? <ContactPage /> : <Navigate to="/" replace />}
+            />
+          </Route>
+        </Routes>
+      </Router>
+    </GoogleOAuthProvider>
   );
 };
 

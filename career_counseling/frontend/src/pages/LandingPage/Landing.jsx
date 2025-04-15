@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"; // ✅ add useEffect
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Signup from "../Signup/Signup";
 import Login from "../LoginPage/Login";
 import "./Landing.css";
@@ -14,18 +15,26 @@ const Landing = ({ setIsAuthenticated }) => {
   const [showSignup, setShowSignup] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const navigate = useNavigate();
 
   const images = [img1, img2, img3, img4, img5];
 
-  const nextSlide = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  // ✅ Auto-slide every 3 seconds
   useEffect(() => {
-    const interval = setInterval(nextSlide, 3000); // 3 seconds
-    return () => clearInterval(interval); // Cleanup
-  }, [currentImageIndex]); // rerun when currentImageIndex changes
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      const parsed = JSON.parse(storedUser);
+      if (parsed?.token) {
+        setIsAuthenticated(true);
+      }
+    }
+  }, [setIsAuthenticated]);
 
   return (
     <div className="landing-container">
@@ -45,7 +54,6 @@ const Landing = ({ setIsAuthenticated }) => {
               />
             ))}
           </div>
-          
           <div className="carousel-dots">
             {images.map((_, index) => (
               <span
@@ -61,14 +69,16 @@ const Landing = ({ setIsAuthenticated }) => {
       {/* Right Section */}
       <div className="right-section">
         <div className="buttons-container">
-          <button className="btn" onClick={() => setShowLogin(true)}>
-            Login
-          </button>
+          <button className="btn" onClick={() => setShowLogin(true)}>Login</button>
+          <button className="btn signup-btn" onClick={() => setShowSignup(true)}>Sign Up</button>
+          
+          {/* Admin Icon */}
           <button
-            className="btn signup-btn"
-            onClick={() => setShowSignup(true)}
+            className="admin-icon-btn"
+            onClick={() => navigate("/admin")}
+            title="Admin Dashboard"
           >
-            Sign Up
+            🛡️
           </button>
         </div>
 

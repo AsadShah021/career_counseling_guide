@@ -11,17 +11,20 @@ app.use(cors());
 
 // Connect to MongoDB
 mongoose.connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 }).then(() => console.log("✅ MongoDB Connected Successfully"))
-.catch((error) => console.error("❌ MongoDB Connection Failed:", error));
+  .catch((error) => console.error("❌ MongoDB Connection Failed:", error));
 
 // Import Routes
 const authRoutes = require("./src/routes/authRoutes");
-const contactRoutes = require("./src/routes/contactRoutes"); // Import contact routes
+const contactRoutes = require("./src/routes/contactRoutes");
+const userRoutes = require("./src/routes/userRoutes"); // ✅ NEW
 
+// Route Registration
 app.use("/api/auth", authRoutes);
-app.use("/api/contact", contactRoutes); // Register contact route
+app.use("/api/contact", contactRoutes);
+app.use("/api/users", userRoutes); // ✅ Register userRoutes here
 
 // Start Server
 const PORT = process.env.PORT || 5000;

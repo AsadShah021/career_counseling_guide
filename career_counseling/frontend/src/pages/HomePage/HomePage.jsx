@@ -113,6 +113,10 @@ const HomePage = () => {
     return logoPath ? logoPath : "/assets/logo/default_logo.png";
   };
 
+  const toggleFaq = (id) => {
+    setActiveFaq((prev) => (prev === id ? null : id));
+  };
+
   return (
     <div className="homepage-container">
       <div className="main-content">
@@ -180,28 +184,31 @@ const HomePage = () => {
           <div className="faq-section">
             <h2 className="faq-title">FAQ about Finding a University</h2>
             <div className="faq">
-              <details open={activeFaq === 1}>
+              <details open={activeFaq === 1} onClick={() => toggleFaq(1)}>
                 <summary><span className="q-mark">Q.</span> What field I have to select?</summary>
                 <p className="answer">
-                  Select a field from a dropdown menu accoording to your interest in studies.
+                  Select a field from a dropdown menu according to your interest in studies.
                 </p>
               </details>
-              <details open={activeFaq === 2}>
+
+              <details open={activeFaq === 2} onClick={() => toggleFaq(2)}>
                 <summary><span className="q-mark">Q.</span> Can I enter the expected Matric marks?</summary>
                 <p className="answer">
-                  You have to enter your matric marks and you can also enter expected matric marks if your result is not aanounced yet.
+                  Yes, you can enter your expected Matric marks if the result is not announced yet.
                 </p>
               </details>
-              <details open={activeFaq === 3}>
+
+              <details open={activeFaq === 3} onClick={() => toggleFaq(3)}>
                 <summary><span className="q-mark">Q.</span> Can I enter expected FSC/FCS marks?</summary>
                 <p className="answer">
-                  You have to enter your FSC/FCS marks and you can also enter expected FSC/FCS marks if your result is not aanounced yet.
+                  You can enter your expected FSC/FCS marks if your result is not yet declared.
                 </p>
               </details>
-              <details open={activeFaq === 4}>
+
+              <details open={activeFaq === 4} onClick={() => toggleFaq(4)}>
                 <summary><span className="q-mark">Q.</span> What are NTS/NET marks?</summary>
                 <p className="answer">
-                  NTS marks are scores from tests by the National Testing Service for admissions, jobs, or scholarships. NET marks are scores from the NUST Entry Test used for admission to NUST. You have to enter those marks if you have attended these test otherwise enter expected marks.
+                  NTS and NET are standardized entrance tests. Provide your score or expected marks here.
                 </p>
               </details>
             </div>
@@ -212,9 +219,7 @@ const HomePage = () => {
       {isModalOpen && (
         <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-modal" onClick={() => setIsModalOpen(false)}>
-              ✖
-            </button>
+            <button className="close-modal" onClick={() => setIsModalOpen(false)}>✖</button>
             <h2>Recommended Universities</h2>
             {universityList.length > 0 ? (
               universityList.map((uni, index) => (

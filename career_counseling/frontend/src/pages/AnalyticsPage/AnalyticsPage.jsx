@@ -11,9 +11,9 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import "./AnalyticsPage.css"; // Import updated CSS
+import Footer from "../../components/Footer"; // ✅ Make sure this path is correct
+import "./AnalyticsPage.css";
 
-// Register Chart.js components
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend);
 
 const AnalyticsPage = () => {
@@ -22,7 +22,7 @@ const AnalyticsPage = () => {
   const [filteredData, setFilteredData] = useState({ labels: [], datasets: [] });
 
   useEffect(() => {
-    fetch("/data/Jobs_Data.json") // Ensure the JSON file is inside the public folder
+    fetch("/data/Jobs_Data.json")
       .then((response) => response.json())
       .then((data) => setChartData(data))
       .catch((error) => console.error("Error fetching data:", error));
@@ -36,18 +36,15 @@ const AnalyticsPage = () => {
     );
   }
 
-  // Dropdown options for field selection
   const fieldOptions = chartData.datasets.map((dataset) => ({
     value: dataset.label,
     label: dataset.label,
   }));
 
-  // Handle Dropdown Change
   const handleSelectChange = (selectedOptions) => {
     setSelectedFields(selectedOptions);
   };
 
-  // Process selected fields and update the chart
   const handleProcessClick = () => {
     if (selectedFields.length === 0) {
       setFilteredData({ labels: [], datasets: [] });
@@ -65,7 +62,6 @@ const AnalyticsPage = () => {
     });
   };
 
-  // Show Top 5 Trending Fields
   const handleShowTrendingFields = () => {
     const growthRates = chartData.datasets.map((dataset) => {
       const initial = dataset.data[0];
@@ -84,7 +80,6 @@ const AnalyticsPage = () => {
     });
   };
 
-  // Chart options
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -107,48 +102,48 @@ const AnalyticsPage = () => {
     },
     elements: {
       line: {
-        borderWidth: 1.5, // Reduce thickness for sharper lines
-        tension: 0, // Remove curve effect to make lines straight
+        borderWidth: 1.5,
+        tension: 0,
       },
       point: {
-        radius: 3, // Adjust point size for better visibility
-        borderWidth: 1, // Make points sharper
+        radius: 3,
+        borderWidth: 1,
       },
     },
-};
-
+  };
 
   return (
-    <div className="chart-container">
-      {/* Dropdown for selecting fields with Search Feature */}
-      <div className="dropdown-container">
-        <Select
-          options={fieldOptions}
-          isMulti
-          onChange={handleSelectChange}
-          placeholder="Search and Select Fields..."
-          isSearchable={true}
-          className="custom-select"
-        />
-      </div>
+    <div className="analytics-wrapper">
+      <div className="chart-container">
+        <div className="dropdown-container">
+          <Select
+            options={fieldOptions}
+            isMulti
+            onChange={handleSelectChange}
+            placeholder="Search and Select Fields..."
+            isSearchable
+            className="custom-select"
+          />
+        </div>
 
-      {/* Buttons Container */}
-      <div className="button-group">
-        <button className="process-btn" onClick={handleProcessClick}>
-          Process
-        </button>
-        <button className="trending-btn" onClick={handleShowTrendingFields}>
-          Show Trending Fields
-        </button>
-      </div>
+        <div className="button-group">
+          <button className="process-btn" onClick={handleProcessClick}>
+            Process
+          </button>
+          <button className="trending-btn" onClick={handleShowTrendingFields}>
+            Show Trending Fields
+          </button>
+        </div>
 
-      {/* Chart Container */}
-      <div className="chart-box">
-        <h2 className="chart-title">Job Trends Visualization</h2>
-        <div className="chart-wrapper">
-          <Line data={filteredData} options={options} />
+        <div className="chart-box">
+          <h2 className="chart-title">Job Trends Visualization</h2>
+          <div className="chart-wrapper">
+            <Line data={filteredData} options={options} />
+          </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };

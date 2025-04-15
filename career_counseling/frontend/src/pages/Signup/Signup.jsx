@@ -1,99 +1,116 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Signup.css"; // Import external CSS for modal styling
-import Login from "../LoginPage/Login"; // Import the Login component
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import "./Signup.css";
 
 const Signup = ({ onClose, openLogin }) => {
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: "",
-    });
-    const [message, setMessage] = useState(""); // Message for success or error
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [message, setMessage] = useState("");
 
-    // Handle input change
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    // Handle signup submission
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post("http://localhost:5000/api/auth/signup", formData);
-            setMessage("Signup successful! Redirecting to login...");
-            
-            // Clear form after successful signup
-            setFormData({ name: "", email: "", password: "" });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:5000/api/auth/signup", formData);
+      setMessage("Signup successful! Redirecting to login...");
 
-            // Delay before switching to login modal
-            setTimeout(() => {
-                if (onClose) onClose(); // Close signup modal
-                if (openLogin) openLogin(); // Open login modal
-            }, 1500);
-        } catch (error) {
-            setMessage(error.response?.data?.message || "Error signing up");
-        }
-    };
+      setFormData({ name: "", email: "", password: "" });
 
-    return (
-        <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-                {/* Close Button */}
-                <button type="button" className="close-btn" onClick={onClose}>
-                    &times;
-                </button>
+      setTimeout(() => {
+        if (onClose) onClose();
+        if (openLogin) openLogin();
+      }, 1500);
+    } catch (error) {
+      setMessage(error.response?.data?.message || "Error signing up");
+    }
+  };
 
-                <h2 className="modal-title">Sign Up</h2>
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try {
+      const decoded = jwtDecode(credentialResponse.credential);
+      const { email, name } = decoded;
 
-                <form onSubmit={handleSubmit} className="modal-form">
-                    {/* Name Field */}
-                    <div className="form-group">
-                        <input 
-                            type="text" 
-                            name="name" 
-                            value={formData.name} 
-                            onChange={handleChange} 
-                            placeholder=" " 
-                            required 
-                        />
-                        <label>Name</label>
-                    </div>
+      await axios.post("http://localhost:5000/api/auth/google-signup", { email, name });
 
-                    {/* Email Field */}
-                    <div className="form-group">
-                        <input 
-                            type="email" 
-                            name="email" 
-                            value={formData.email} 
-                            onChange={handleChange} 
-                            placeholder=" " 
-                            required 
-                        />
-                        <label>Email</label>
-                    </div>
+      setMessage("Google Signup successful! Redirecting to login...");
+      setTimeout(() => {
+        if (onClose) onClose();
+        if (openLogin) openLogin();
+      }, 1500);
+    } catch (error) {
+      console.error("Google Signup Error:", error);
+      setMessage("Google signup failed");
+    }
+  };
 
-                    {/* Password Field */}
-                    <div className="form-group">
-                        <input 
-                            type="password" 
-                            name="password" 
-                            value={formData.password} 
-                            onChange={handleChange} 
-                            placeholder=" " 
-                            required 
-                        />
-                        <label>Password</label>
-                    </div>
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+        <button type="button" className="close-btn" onClick={onClose}>
+          &times;
+        </button>
 
-                    <button type="submit" className="btn-submit">Sign Up</button>
-                </form>
+        <h2 className="modal-title">Sign Up</h2>
 
-                {/* Display Success/Error Message */}
-                {message && <p className="message">{message}</p>}
-            </div>
+        <form onSubmit={handleSubmit} className="modal-form">
+          <div className="form-group">
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder=" "
+              required
+            />
+            <label>Name</label>
+          </div>
+
+          <div className="form-group">
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder=" "
+              required
+            />
+            <label>Email</label>
+          </div>
+
+          <div className="form-group">
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder=" "
+              required
+            />
+            <label>Password</label>
+          </div>
+
+          <button type="submit" className="btn-submit">Sign Up</button>
+        </form>
+
+        <div className="google-login" style={{ marginTop: "15px" }}>
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setMessage("Google signup failed")}
+          />
         </div>
-    );
+
+        {message && <p className="message">{message}</p>}
+      </div>
+    </div>
+  );
 };
 
 export default Signup;

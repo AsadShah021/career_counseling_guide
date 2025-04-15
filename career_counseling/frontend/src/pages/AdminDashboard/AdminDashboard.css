@@ -1,0 +1,66 @@
+.admin-dashboard {
+  padding: 50px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f9fc;
+  min-height: 100vh;
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  color: #1b325f;
+  margin-bottom: 20px;
+}
+
+.section-heading {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #2b4c7e;
+}
+
+.no-users {
+  font-style: italic;
+  color: #999;
+  margin-top: 10px;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.user-table th,
+.user-table td {
+  padding: 14px 18px;
+  text-align: left;
+}
+
+.user-table thead {
+  background-color: #2b4c7e;
+  color: white;
+}
+
+.user-table tbody tr:nth-child(even) {
+  background-color: #f1f4f8;
+}
+
+.user-table tbody tr:hover {
+  background-color: #e3eaf3;
+  transition: background 0.3s ease;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #dc3545;
+}
+
+.delete-btn:hover {
+  transform: scale(1.2);
+  transition: 0.2s ease;
+}

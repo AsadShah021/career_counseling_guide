@@ -5,15 +5,11 @@ import Navbar from "./Navbar";
 function NavbarVisibility({ isAuthenticated }) {
   const location = useLocation();
 
-  // If user isn't authenticated, or we are on the landing page routes, return nothing
-  if (!isAuthenticated) return null;
-
-  // Hide navbar on root "/" and "/landing"
-  if (location.pathname === "/" || location.pathname === "/landing") {
+  // Hide navbar for unauthenticated users or on landing/root page
+  if (!isAuthenticated || location.pathname === "/" || location.pathname === "/landing") {
     return null;
   }
 
-  // Otherwise, show the navbar
   return <Navbar />;
 }
 
