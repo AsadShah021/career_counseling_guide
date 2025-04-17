@@ -4,11 +4,9 @@ const adminSchema = new mongoose.Schema(
   {
     name: String,
     email: { type: String, unique: true },
-    password: String, // "google-oauth" or hashed
+    password: String,
   },
-  {
-    collection: "admin", // ✅ Force collection name to match MongoDB
-  }
+  { collection: "admin" } // ensures proper collection
 );
 
 module.exports = mongoose.model("Admin", adminSchema);

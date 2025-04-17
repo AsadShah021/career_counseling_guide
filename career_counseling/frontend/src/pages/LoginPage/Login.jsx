@@ -23,22 +23,25 @@ const Login = ({ onClose, setIsAuthenticated }) => {
       });
 
       const decoded = jwtDecode(response.data.token);
+      const { name, email } = response.data.user;
+      const { role } = response.data;
 
       localStorage.setItem(
         "user",
         JSON.stringify({
           token: response.data.token,
-          name: response.data.user.name,
-          email: response.data.user.email,
+          name,
+          email,
+          role,
         })
       );
 
       setIsAuthenticated(true);
-      setMessage("Login Successful!");
+      setMessage(`${role === "admin" ? "Admin" : "User"} Login Successful!`);
 
       setTimeout(() => {
         onClose();
-        navigate("/home");
+        navigate(role === "admin" ? "/admin" : "/home");
       }, 1000);
     } catch (error) {
       console.error("Login Error:", error.response?.data);
@@ -53,13 +56,16 @@ const Login = ({ onClose, setIsAuthenticated }) => {
       });
 
       const decoded = jwtDecode(response.data.token);
+      const { name, email } = response.data.user;
+      const { role } = response.data;
 
       localStorage.setItem(
         "user",
         JSON.stringify({
           token: response.data.token,
-          name: response.data.user.name,
-          email: response.data.user.email,
+          name,
+          email,
+          role,
         })
       );
 
@@ -68,7 +74,7 @@ const Login = ({ onClose, setIsAuthenticated }) => {
 
       setTimeout(() => {
         onClose();
-        navigate("/home");
+        navigate(role === "admin" ? "/admin" : "/home");
       }, 1000);
     } catch (error) {
       console.error("Google Login Error:", error);

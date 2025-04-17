@@ -71,15 +71,6 @@ const Landing = ({ setIsAuthenticated }) => {
         <div className="buttons-container">
           <button className="btn" onClick={() => setShowLogin(true)}>Login</button>
           <button className="btn signup-btn" onClick={() => setShowSignup(true)}>Sign Up</button>
-          
-          {/* Admin Icon */}
-          <button
-            className="admin-icon-btn"
-            onClick={() => navigate("/admin")}
-            title="Admin Dashboard"
-          >
-            🛡️
-          </button>
         </div>
 
         <div className="content">
