@@ -98,9 +98,8 @@ body {
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 20px;
-  text-align: left; /* 👈 Ensures left alignment */
+  text-align: left;
 }
-
 
 .faq {
   display: flex;
@@ -143,6 +142,92 @@ body {
   font-size: 13px;
   margin-top: 4px;
   margin-bottom: 0;
+}
+
+/* Modal Overlay and Content */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.close-modal {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* University Cards */
+.university-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: #f7f7f7;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  gap: 20px;
+}
+
+.university-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.university-info {
+  flex-grow: 1;
+}
+
+.university-info h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+}
+
+.visit-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.visit-btn:hover {
+  background-color: #218838;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
 }
 
 /* Responsive */

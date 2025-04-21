@@ -1,6 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const multer = require("multer");
+const path = require("path");
+const { spawn } = require("child_process");
 require("dotenv").config();
 
 const app = express();
@@ -27,20 +30,19 @@ mongoose.connect(process.env.DATABASE_URL, {
 const authRoutes = require("./src/routes/authRoutes");
 const contactRoutes = require("./src/routes/contactRoutes");
 const userRoutes = require("./src/routes/userRoutes");
-const adminRoutes = require("./src/routes/adminRoutes"); // ✅ Ensure correct path
+const adminRoutes = require("./src/routes/adminRoutes");
 
-// ✅ Register Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/admin", adminRoutes); // ✅ DELETE /api/admin/:id handled here
+app.use("/api/admin", adminRoutes);
 
-// ✅ Health Check Route
+// ✅ Health Check
 app.get("/", (req, res) => {
   res.send("🚀 API is running");
 });
 
-// ✅ Email Testing Route
+// ✅ Email Test Route
 const nodemailer = require("nodemailer");
 
 app.get("/api/contact/test-mail", async (req, res) => {
@@ -55,7 +57,7 @@ app.get("/api/contact/test-mail", async (req, res) => {
 
     await transporter.sendMail({
       from: `"Admin Test" <${process.env.EMAIL_USER}>`,
-      to: "your-personal-email@gmail.com", // 🔁 Replace for real test
+      to: "your-personal-email@gmail.com",
       subject: "✅ Nodemailer Test Email",
       text: "🎉 If you're reading this, email config works perfectly.",
     });
@@ -65,6 +67,49 @@ app.get("/api/contact/test-mail", async (req, res) => {
     console.error("❌ Nodemailer Test Error:", error.stack);
     res.status(500).json({ error: error.message });
   }
+});
+
+// ✅ Predict Merit Route
+const upload = multer({ dest: "uploads/" });
+
+app.post("/api/predict-merit", upload.single("file"), (req, res) => {
+  const filePath = path.resolve(req.file.path);
+  const year = req.body.year;
+
+  const python = spawn("python", ["predict_merit.py", filePath, year]);
+
+  let result = "";
+  let errorOccurred = false;
+
+  python.stdout.on("data", (data) => {
+    const output = data.toString().trim();
+    console.log("🟢 Python Output:", output);
+    result += output;
+  });
+
+  python.stderr.on("data", (data) => {
+    errorOccurred = true;
+    console.error("❌ Python stderr:", data.toString());
+  });
+
+  python.on("close", (code) => {
+    if (code === 0 && !errorOccurred) {
+      if (result.includes("already exists")) {
+        return res.status(409).json({ message: `Prediction for year ${year} already exists.` });
+      } else if (result.includes("invalid year")) {
+        return res.status(400).json({ message: `Invalid year. Only ${parseInt(year) - 1 + 1} is allowed.` });
+      }
+
+      const outputPath = result.trim();
+      return res.status(200).json({
+        message: `✅ Merit prediction completed successfully for ${year}.`,
+        savedTo: outputPath,
+        url: "/data/Merit_Predictions.json"
+      });
+    } else {
+      return res.status(500).json({ error: "❌ Prediction script failed." });
+    }
+  });
 });
 
 // ✅ Start Server

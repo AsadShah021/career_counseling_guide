@@ -9,7 +9,14 @@ const AdminDashboard = () => {
   const [admins, setAdmins] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [reply, setReply] = useState({});
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchUsers();
+    fetchAdmins();
+    fetchContacts();
+  }, []);
 
   const fetchUsers = async () => {
     try {
@@ -41,12 +48,6 @@ const AdminDashboard = () => {
     }
   };
 
-  useEffect(() => {
-    fetchUsers();
-    fetchAdmins();
-    fetchContacts();
-  }, []);
-
   const handleDeleteUser = async (id) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
@@ -63,20 +64,19 @@ const AdminDashboard = () => {
 
   const handleDeleteAdmin = async (id) => {
     if (admins.length <= 1) {
-      alert("\u26A0\uFE0F Cannot delete the last remaining admin.");
+      alert("⚠️ Cannot delete the last remaining admin.");
       return;
     }
 
     if (window.confirm("Are you sure you want to delete this admin account?")) {
       try {
         const res = await axios.delete(`http://localhost:5000/api/admin/${id}`);
-        alert("\u2705 Admin deleted successfully.");
+        alert("✅ Admin deleted successfully.");
         fetchAdmins();
       } catch (error) {
-        const isJSON = error.response && error.response.data && error.response.data.message;
-        const message = isJSON ? error.response.data.message : `Non-JSON error (code ${error.response?.status || 500})`;
+        const message = error?.response?.data?.message || `Error code: ${error.response?.status}`;
         console.error("Admin Delete Error:", error);
-        alert(`\u274C Failed to delete admin: ${message}`);
+        alert(`❌ Failed to delete admin: ${message}`);
       }
     }
   };
@@ -86,14 +86,18 @@ const AdminDashboard = () => {
   };
 
   const handleSendReply = async (email, id) => {
-    const message = reply[id];
+    const message = reply[id]?.trim();
+    const contact = contacts.find((c) => c._id === id);
     if (!message) return alert("Please type a reply.");
+
+    const composedMessage = `Dear User,\n\nWe are from Career Counseling Support.\n\nYour original message:\n"${contact.message}"\n\nOur response:\n${message}`;
 
     try {
       const res = await axios.post("http://localhost:5000/api/contact/reply", {
         email,
-        message,
+        message: composedMessage,
         contactId: id,
+        replyMessage: message,
       });
 
       if (res.status === 200) {
@@ -138,7 +142,14 @@ const AdminDashboard = () => {
         alt="Logout"
         title="Logout"
         onClick={handleLogout}
-        style={{ position: "absolute", top: "15px", right: "20px", width: "30px", height: "30px", cursor: "pointer" }}
+        style={{
+          position: "absolute",
+          top: "15px",
+          right: "20px",
+          width: "30px",
+          height: "30px",
+          cursor: "pointer",
+        }}
       />
 
       <div className="top-bar">
@@ -157,130 +168,181 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* USERS */}
       <h2 className="section-heading">📋 Registered Users</h2>
-      {users.length === 0 ? (
-        <p className="no-users">No users found.</p>
-      ) : (
-        <table className="user-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Action</th>
+      <table className="user-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user, index) => (
+            <tr key={user._id}>
+              <td>{index + 1}</td>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>
+                <button className="delete-btn" onClick={() => handleDeleteUser(user._id)}>
+                  🗑️
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {users.map((user, index) => (
-              <tr key={user._id}>
-                <td>{index + 1}</td>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>
-                  <button className="delete-btn" onClick={() => handleDeleteUser(user._id)}>
-                    🗑️
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+          ))}
+        </tbody>
+      </table>
 
-      {/* ADMINS */}
       <h2 className="section-heading">🗡️ Admin Accounts</h2>
-      {admins.length === 0 ? (
-        <p className="no-users">No admins found.</p>
-      ) : (
-        <table className="user-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Action</th>
+      <table className="user-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {admins.map((admin, index) => (
+            <tr key={admin._id}>
+              <td>{index + 1}</td>
+              <td>{admin.name}</td>
+              <td>{admin.email}</td>
+              <td>
+                <button className="delete-btn" onClick={() => handleDeleteAdmin(admin._id)}>
+                  🗑️
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {admins.map((admin, index) => (
-              <tr key={admin._id}>
-                <td>{index + 1}</td>
-                <td>{admin.name}</td>
-                <td>{admin.email}</td>
-                <td>
-                  <button className="delete-btn" onClick={() => handleDeleteAdmin(admin._id)}>
-                    🗑️
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+          ))}
+        </tbody>
+      </table>
 
-      {/* CONTACTS */}
       <h2 className="section-heading">📨 Contact Messages</h2>
-      {contacts.length === 0 ? (
-        <p className="no-users">No messages found.</p>
-      ) : (
-        <table className="user-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Message</th>
-              <th>Status</th>
-              <th>Reply</th>
-            </tr>
-          </thead>
-          <tbody>
-            {contacts.map((contact, index) => (
-              <tr key={contact._id}>
-                <td>{index + 1}</td>
-                <td>{contact.name}</td>
-                <td>{contact.email}</td>
-                <td>{contact.message}</td>
-                <td>{contact.replied ? "✅ Replied" : "⏳ Pending"}</td>
-                <td>
-                  {contact.replied ? (
-                    <div style={{ color: "#555", whiteSpace: "pre-line" }}>
-                      {contact.replyMessage}
+      <table className="user-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th className="message-col">Message</th>
+            <th>Status</th>
+            <th className="reply-col">Reply</th>
+          </tr>
+        </thead>
+        <tbody>
+          {contacts.map((contact, index) => (
+            <tr key={contact._id}>
+              <td>{index + 1}</td>
+              <td>{contact.name}</td>
+              <td>{contact.email}</td>
+              <td className="message-col">{contact.message}</td>
+              <td>{contact.replied ? "✅ Replied" : "⏳ Pending"}</td>
+              <td className="reply-col">
+                {contact.replied ? (
+                  <div className="reply-wrapper">
+                    <div className="user-reply">{contact.replyMessage}</div>
+                    <div className="reply-btn-container">
                       <button
-                        className="delete-btn"
+                        className="reply-delete-btn"
                         onClick={() => handleDeleteMessage(contact._id)}
                         title="Delete Message"
-                        style={{ marginLeft: "10px", fontSize: "16px" }}
                       >
                         🗑️
                       </button>
                     </div>
-                  ) : (
-                    <>
-                      <textarea
-                        rows="2"
-                        cols="30"
-                        value={reply[contact._id] || ""}
-                        onChange={(e) => handleReplyChange(contact._id, e.target.value)}
-                        placeholder="Type reply here"
-                      ></textarea>
-                      <br />
-                      <button
-                        className="auth-btn user-btn"
-                        onClick={() => handleSendReply(contact.email, contact._id)}
-                        style={{ marginTop: "5px" }}
-                      >
-                        Send Reply
-                      </button>
-                    </>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+                  </div>
+                ) : (
+                  <>
+                    <textarea
+                      className="reply-textarea"
+                      rows="4"
+                      value={reply[contact._id] || ""}
+                      onChange={(e) => handleReplyChange(contact._id, e.target.value)}
+                      placeholder="Type reply here"
+                    ></textarea>
+                    <br />
+                    <button
+                      className="auth-btn user-btn"
+                      onClick={() => handleSendReply(contact.email, contact._id)}
+                      style={{ marginTop: "5px" }}
+                    >
+                      Send Reply
+                    </button>
+                  </>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {/* 🔮 Predict Merit Section */}
+      <div className="predict-merit-section">
+        <h2 className="section-heading">🔮 Predict University Merit</h2>
+
+        {loading ? (
+          <div className="loader-message">
+            <div className="spinner"></div>
+            <p style={{ marginTop: "10px" }}>🔄 Predicting merit... please wait</p>
+          </div>
+        ) : (
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const file = e.target.file.files[0];
+              const year = e.target.year.value;
+
+              if (!file || !year) {
+                return alert("Please select a file and enter the year.");
+              }
+
+              const formData = new FormData();
+              formData.append("file", file);
+              formData.append("year", year);
+              setLoading(true);
+
+              try {
+                const res = await axios.post("http://localhost:5000/api/predict-merit", formData);
+                alert(`✅ Merit prediction completed successfully for ${year}.`);
+              } catch (err) {
+                if (err.response?.status === 409) {
+                  alert(`⚠️ Prediction for year ${year} already exists.`);
+                } else {
+                  alert("❌ Prediction failed. Please try again.");
+                  console.error(err);
+                }
+              } finally {
+                setLoading(false);
+                e.target.reset();
+              }
+            }}
+          >
+            <input type="file" name="file" accept=".csv,.xlsx" required />
+            <input
+              type="number"
+              name="year"
+              placeholder="Enter year to predict (e.g. 2026)"
+              required
+              style={{ marginLeft: "10px", padding: "5px", width: "180px" }}
+            />
+            <button
+              type="submit"
+              className="auth-btn"
+              style={{
+                marginLeft: "10px",
+                backgroundColor: "#4CAF50",
+                color: "white",
+                padding: "6px 12px",
+              }}
+            >
+              Predict Merit
+            </button>
+          </form>
+        )}
+      </div>
     </div>
   );
 };

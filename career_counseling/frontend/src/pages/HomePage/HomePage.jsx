@@ -7,6 +7,7 @@ const HomePage = () => {
   const [selectedField, setSelectedField] = useState("");
   const [marks, setMarks] = useState({ matric: "", fsc: "", nts: "" });
   const [universityList, setUniversityList] = useState([]);
+  const [alternateSuggestions, setAlternateSuggestions] = useState([]);
   const [calculatedMerit, setCalculatedMerit] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState(null);
@@ -89,19 +90,24 @@ const HomePage = () => {
     try {
       const response = await fetch("/data/Merit_Predictions.json");
       const data = await response.json();
-      const studentAggregate = calculateAggregate();
+      const studentAggregate = parseFloat(calculateAggregate());
       setCalculatedMerit(studentAggregate);
 
-      const matchedUniversities = data
-        .filter(
-          (item) =>
-            item.Field_of_Study === selectedField &&
-            studentAggregate >= item.Merit_2025
-        )
-        .sort((a, b) => b.Merit_2025 - a.Merit_2025)
-        .slice(0, 5);
+      const matched = data.filter(
+        (item) =>
+          item.Field_of_Study === selectedField &&
+          studentAggregate >= item.Merit_2025
+      );
 
-      setUniversityList(matchedUniversities);
+      const alternate = data.filter(
+        (item) =>
+          item.Field_of_Study !== selectedField &&
+          Math.abs(studentAggregate - item.Merit_2025) <= 5
+      );
+
+      setUniversityList(matched.sort((a, b) => b.Merit_2025 - a.Merit_2025).slice(0, 5));
+      setAlternateSuggestions(alternate.sort((a, b) => Math.abs(studentAggregate - a.Merit_2025) - Math.abs(studentAggregate - b.Merit_2025)).slice(0, 5));
+
       setIsModalOpen(true);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -161,20 +167,14 @@ const HomePage = () => {
                 className="input-field"
                 title="Enter NTS/NET marks in percentage (out of 100)"
               />
-              <button className="go-button" onClick={fetchAndFilterUniversities}>
-                GO
-              </button>
-              <button className="clear-button" onClick={clearFields}>
-                Clear
-              </button>
+              <button className="go-button" onClick={fetchAndFilterUniversities}>GO</button>
+              <button className="clear-button" onClick={clearFields}>Clear</button>
             </div>
             {formErrors.nts && <p className="error-msg">{formErrors.nts}</p>}
 
             {calculatedMerit !== null && (
               <div className="calculated-merit">
-                <p>
-                  Your Calculated Merit: <strong>{calculatedMerit}%</strong>
-                </p>
+                <p>Your Calculated Merit: <strong>{calculatedMerit}%</strong></p>
               </div>
             )}
           </div>
@@ -184,33 +184,17 @@ const HomePage = () => {
           <div className="faq-section">
             <h2 className="faq-title">FAQ about Finding a University</h2>
             <div className="faq">
-              <details open={activeFaq === 1} onClick={() => toggleFaq(1)}>
-                <summary><span className="q-mark">Q.</span> What field I have to select?</summary>
-                <p className="answer">
-                  Select a field from a dropdown menu according to your interest in studies.
-                </p>
-              </details>
-
-              <details open={activeFaq === 2} onClick={() => toggleFaq(2)}>
-                <summary><span className="q-mark">Q.</span> Can I enter the expected Matric marks?</summary>
-                <p className="answer">
-                  Yes, you can enter your expected Matric marks if the result is not announced yet.
-                </p>
-              </details>
-
-              <details open={activeFaq === 3} onClick={() => toggleFaq(3)}>
-                <summary><span className="q-mark">Q.</span> Can I enter expected FSC/FCS marks?</summary>
-                <p className="answer">
-                  You can enter your expected FSC/FCS marks if your result is not yet declared.
-                </p>
-              </details>
-
-              <details open={activeFaq === 4} onClick={() => toggleFaq(4)}>
-                <summary><span className="q-mark">Q.</span> What are NTS/NET marks?</summary>
-                <p className="answer">
-                  NTS and NET are standardized entrance tests. Provide your score or expected marks here.
-                </p>
-              </details>
+              {[1, 2, 3, 4].map(id => (
+                <details key={id} open={activeFaq === id} onClick={() => toggleFaq(id)}>
+                  <summary><span className="q-mark">Q.</span> {id === 1 ? "What field I have to select?" : id === 2 ? "Can I enter the expected Matric marks?" : id === 3 ? "Can I enter expected FSC/FCS marks?" : "What are NTS/NET marks?"}</summary>
+                  <p className="answer">
+                    {id === 1 && "Select a field from a dropdown menu according to your interest in studies."}
+                    {id === 2 && "Yes, you can enter your expected Matric marks if the result is not announced yet."}
+                    {id === 3 && "You can enter your expected FSC/FCS marks if your result is not yet declared."}
+                    {id === 4 && "NTS and NET are standardized entrance tests. Provide your score or expected marks here."}
+                  </p>
+                </details>
+              ))}
             </div>
           </div>
         </div>
@@ -224,24 +208,31 @@ const HomePage = () => {
             {universityList.length > 0 ? (
               universityList.map((uni, index) => (
                 <div key={index} className="university-item">
-                  <img
-                    src={getLogo(uni.Institution_Name)}
-                    alt={`${uni.Institution_Name} Logo`}
-                    className="university-logo"
-                  />
+                  <img src={getLogo(uni.Institution_Name)} alt={`${uni.Institution_Name} Logo`} className="university-logo" />
                   <div className="university-info">
                     <h3>{uni.Institution_Name}</h3>
-                    <button
-                      className="visit-btn"
-                      onClick={() => window.open(uni.Admission_Link, "_blank")}
-                    >
-                      Visit University
-                    </button>
+                    <button className="visit-btn" onClick={() => window.open(uni.Admission_Link, "_blank")}>Visit University</button>
                   </div>
                 </div>
               ))
             ) : (
               <p className="no-results">No matching universities found.</p>
+            )}
+
+            {alternateSuggestions.length > 0 && (
+              <div className="alternate-fields">
+                <h3>Explore Other Fields Based on Your Merit</h3>
+                {alternateSuggestions.map((alt, index) => (
+                  <div key={index} className="university-item">
+                    <img src={getLogo(alt.Institution_Name)} alt={`${alt.Institution_Name} Logo`} className="university-logo" />
+                    <div className="university-info">
+                      <h4>{alt.Institution_Name} - {alt.Field_of_Study}</h4>
+                      <p>Required Merit: {alt.Merit_2025}%</p>
+                      <button className="visit-btn" onClick={() => window.open(alt.Admission_Link, "_blank")}>Visit University</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         </div>
