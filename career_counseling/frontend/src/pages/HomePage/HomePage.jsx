@@ -33,11 +33,20 @@ const HomePage = () => {
     const { name, value } = e.target;
     setMarks((prev) => ({ ...prev, [name]: value }));
     if (name === "matric" && value > 1100) {
-      setFormErrors((prev) => ({ ...prev, matric: "Matric marks cannot exceed 1100." }));
+      setFormErrors((prev) => ({
+        ...prev,
+        matric: "Matric marks cannot exceed 1100.",
+      }));
     } else if (name === "fsc" && value > 1100) {
-      setFormErrors((prev) => ({ ...prev, fsc: "FSC marks cannot exceed 1100." }));
+      setFormErrors((prev) => ({
+        ...prev,
+        fsc: "FSC marks cannot exceed 1100.",
+      }));
     } else if (name === "nts" && value > 100) {
-      setFormErrors((prev) => ({ ...prev, nts: "NTS marks cannot exceed 100." }));
+      setFormErrors((prev) => ({
+        ...prev,
+        nts: "NTS marks cannot exceed 100.",
+      }));
     } else {
       setFormErrors((prev) => ({ ...prev, [name]: "" }));
     }
@@ -52,11 +61,14 @@ const HomePage = () => {
     const errors = {};
     if (!selectedField) errors.selectedField = "Select Field is required.";
     if (!marks.matric) errors.matric = "Matric marks are required.";
-    else if (parseInt(marks.matric) > 1100) errors.matric = "Matric marks cannot exceed 1100.";
+    else if (parseInt(marks.matric) > 1100)
+      errors.matric = "Matric marks cannot exceed 1100.";
     if (!marks.fsc) errors.fsc = "FSC marks are required.";
-    else if (parseInt(marks.fsc) > 1100) errors.fsc = "FSC marks cannot exceed 1100.";
+    else if (parseInt(marks.fsc) > 1100)
+      errors.fsc = "FSC marks cannot exceed 1100.";
     if (!marks.nts) errors.nts = "NTS marks are required.";
-    else if (parseInt(marks.nts) > 100) errors.nts = "NTS marks cannot exceed 100.";
+    else if (parseInt(marks.nts) > 100)
+      errors.nts = "NTS marks cannot exceed 100.";
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -105,8 +117,18 @@ const HomePage = () => {
           Math.abs(studentAggregate - item.Merit_2025) <= 5
       );
 
-      setUniversityList(matched.sort((a, b) => b.Merit_2025 - a.Merit_2025).slice(0, 5));
-      setAlternateSuggestions(alternate.sort((a, b) => Math.abs(studentAggregate - a.Merit_2025) - Math.abs(studentAggregate - b.Merit_2025)).slice(0, 5));
+      setUniversityList(
+        matched.sort((a, b) => b.Merit_2025 - a.Merit_2025).slice(0, 5)
+      );
+      setAlternateSuggestions(
+        alternate
+          .sort(
+            (a, b) =>
+              Math.abs(studentAggregate - a.Merit_2025) -
+              Math.abs(studentAggregate - b.Merit_2025)
+          )
+          .slice(0, 5)
+      );
 
       setIsModalOpen(true);
     } catch (error) {
@@ -130,7 +152,9 @@ const HomePage = () => {
           <div className="input-form">
             <div ref={dropdownRef} title="Select any field of your interest">
               <DropdownFields onFieldSelect={handleFieldSelect} />
-              {formErrors.selectedField && <p className="error-msg">{formErrors.selectedField}</p>}
+              {formErrors.selectedField && (
+                <p className="error-msg">{formErrors.selectedField}</p>
+              )}
             </div>
             <input
               type="number"
@@ -142,7 +166,9 @@ const HomePage = () => {
               className="input-field"
               title="Enter matric marks out of 1100"
             />
-            {formErrors.matric && <p className="error-msg">{formErrors.matric}</p>}
+            {formErrors.matric && (
+              <p className="error-msg">{formErrors.matric}</p>
+            )}
 
             <input
               type="number"
@@ -167,14 +193,23 @@ const HomePage = () => {
                 className="input-field"
                 title="Enter NTS/NET marks in percentage (out of 100)"
               />
-              <button className="go-button" onClick={fetchAndFilterUniversities}>GO</button>
-              <button className="clear-button" onClick={clearFields}>Clear</button>
+              <button
+                className="go-button"
+                onClick={fetchAndFilterUniversities}
+              >
+                GO
+              </button>
+              <button className="clear-button" onClick={clearFields}>
+                Clear
+              </button>
             </div>
             {formErrors.nts && <p className="error-msg">{formErrors.nts}</p>}
 
             {calculatedMerit !== null && (
               <div className="calculated-merit">
-                <p>Your Calculated Merit: <strong>{calculatedMerit}%</strong></p>
+                <p>
+                  Your Calculated Merit: <strong>{calculatedMerit}%</strong>
+                </p>
               </div>
             )}
           </div>
@@ -184,14 +219,31 @@ const HomePage = () => {
           <div className="faq-section">
             <h2 className="faq-title">FAQ about Finding a University</h2>
             <div className="faq">
-              {[1, 2, 3, 4].map(id => (
-                <details key={id} open={activeFaq === id} onClick={() => toggleFaq(id)}>
-                  <summary><span className="q-mark">Q.</span> {id === 1 ? "What field I have to select?" : id === 2 ? "Can I enter the expected Matric marks?" : id === 3 ? "Can I enter expected FSC/FCS marks?" : "What are NTS/NET marks?"}</summary>
+              {[1, 2, 3, 4].map((id) => (
+                <details
+                  key={id}
+                  open={activeFaq === id}
+                  onClick={() => toggleFaq(id)}
+                >
+                  <summary>
+                    <span className="q-mark">Q.</span>{" "}
+                    {id === 1
+                      ? "What field I have to select?"
+                      : id === 2
+                      ? "Can I enter the expected Matric marks?"
+                      : id === 3
+                      ? "Can I enter expected FSC/FCS marks?"
+                      : "What are NTS/NET marks?"}
+                  </summary>
                   <p className="answer">
-                    {id === 1 && "Select a field from a dropdown menu according to your interest in studies."}
-                    {id === 2 && "Yes, you can enter your expected Matric marks if the result is not announced yet."}
-                    {id === 3 && "You can enter your expected FSC/FCS marks if your result is not yet declared."}
-                    {id === 4 && "NTS and NET are standardized entrance tests. Provide your score or expected marks here."}
+                    {id === 1 &&
+                      "Select a field from a dropdown menu according to your interest in studies."}
+                    {id === 2 &&
+                      "Yes, you can enter your expected Matric marks if the result is not announced yet."}
+                    {id === 3 &&
+                      "You can enter your expected FSC/FCS marks if your result is not yet declared."}
+                    {id === 4 &&
+                      "NTS and NET are standardized entrance tests. Provide your score or expected marks here."}
                   </p>
                 </details>
               ))}
@@ -203,15 +255,29 @@ const HomePage = () => {
       {isModalOpen && (
         <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-modal" onClick={() => setIsModalOpen(false)}>✖</button>
+            <button
+              className="close-modal"
+              onClick={() => setIsModalOpen(false)}
+            >
+              ✖
+            </button>
             <h2>Recommended Universities</h2>
             {universityList.length > 0 ? (
               universityList.map((uni, index) => (
                 <div key={index} className="university-item">
-                  <img src={getLogo(uni.Institution_Name)} alt={`${uni.Institution_Name} Logo`} className="university-logo" />
+                  <img
+                    src={getLogo(uni.Institution_Name)}
+                    alt={`${uni.Institution_Name} Logo`}
+                    className="university-logo"
+                  />
                   <div className="university-info">
                     <h3>{uni.Institution_Name}</h3>
-                    <button className="visit-btn" onClick={() => window.open(uni.Admission_Link, "_blank")}>Visit University</button>
+                    <button
+                      className="visit-btn"
+                      onClick={() => window.open(uni.Admission_Link, "_blank")}
+                    >
+                      Visit University
+                    </button>
                   </div>
                 </div>
               ))
@@ -224,11 +290,24 @@ const HomePage = () => {
                 <h3>Explore Other Fields Based on Your Merit</h3>
                 {alternateSuggestions.map((alt, index) => (
                   <div key={index} className="university-item">
-                    <img src={getLogo(alt.Institution_Name)} alt={`${alt.Institution_Name} Logo`} className="university-logo" />
+                    <img
+                      src={getLogo(alt.Institution_Name)}
+                      alt={`${alt.Institution_Name} Logo`}
+                      className="university-logo"
+                    />
                     <div className="university-info">
-                      <h4>{alt.Institution_Name} - {alt.Field_of_Study}</h4>
+                      <h4>
+                        {alt.Institution_Name} - {alt.Field_of_Study}
+                      </h4>
                       <p>Required Merit: {alt.Merit_2025}%</p>
-                      <button className="visit-btn" onClick={() => window.open(alt.Admission_Link, "_blank")}>Visit University</button>
+                      <button
+                        className="visit-btn"
+                        onClick={() =>
+                          window.open(alt.Admission_Link, "_blank")
+                        }
+                      >
+                        Visit University
+                      </button>
                     </div>
                   </div>
                 ))}

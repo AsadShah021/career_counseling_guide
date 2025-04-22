@@ -14,12 +14,23 @@ import {
 import Footer from "../../components/Footer"; // ✅ Make sure this path is correct
 import "./AnalyticsPage.css";
 
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend);
+ChartJS.register(
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const AnalyticsPage = () => {
   const [chartData, setChartData] = useState(null);
   const [selectedFields, setSelectedFields] = useState([]);
-  const [filteredData, setFilteredData] = useState({ labels: [], datasets: [] });
+  const [filteredData, setFilteredData] = useState({
+    labels: [],
+    datasets: [],
+  });
 
   useEffect(() => {
     fetch("/data/Jobs_Data.json")
