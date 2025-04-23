@@ -32,28 +32,27 @@ body {
   font-size: 14px;
   font-weight: 500;
   border: none;
-  border-radius: 6px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.3s ease-in-out;
   margin-left: 10px;
+  color: white;
+  background: linear-gradient(90deg, #0096FF, #005BEA);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.auth-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(90deg, #007BFF, #004EBA);
 }
 
 .signup-btn {
-  background-color: #28a745;
-  color: white;
-}
-
-.signup-btn:hover {
-  background-color: #218838;
+  background: linear-gradient(90deg, #0096FF, #005BEA);
 }
 
 .user-btn {
-  background-color: #007bff;
-  color: white;
-}
-
-.user-btn:hover {
-  background-color: #0056b3;
+  background: linear-gradient(90deg, #0096FF, #005BEA);
 }
 
 .section-heading {
@@ -92,7 +91,7 @@ body {
 
 .user-table th:nth-child(1),
 .user-table td:nth-child(1) {
-  width: 40px; /* 🔧 Shrink the "#" column */
+  width: 40px;
   text-align: center;
 }
 
@@ -125,6 +124,7 @@ body {
   word-break: break-word;
   max-width: 300px;
 }
+
 .reply-wrapper {
   display: flex;
   flex-direction: column;
@@ -153,10 +153,11 @@ body {
   transform: scale(1.2);
   color: #b52a3c;
 }
+
 .predict-merit-section {
   margin-top: 30px;
   padding: 20px;
-  background-color: #f6f6f6;
+  background-color: #ffffff;
   border-radius: 10px;
 }
 
@@ -165,6 +166,55 @@ body {
   flex-direction: column;
   align-items: center;
   margin-top: 15px;
+}
+.top-controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.logout-icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.logout-icon:hover {
+  transform: scale(1.1);
+}
+.predict-form-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.predict-form-container form {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.green-btn {
+  background: linear-gradient(90deg, #28a745, #218838);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+}
+
+.green-btn:hover {
+  background: linear-gradient(90deg, #218838, #1e7e34);
+  transform: translateY(-2px);
 }
 
 .spinner {

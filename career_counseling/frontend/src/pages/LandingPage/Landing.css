@@ -1,42 +1,68 @@
-body {
+/* Global Reset */
+html, body, #root {
     margin: 0;
-    padding: 0; /* set to zero */
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-/* Landing Page Container */
-.landing-container {
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: white !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  
+  /* Slide-down animation */
+  .slide-down {
+    animation: slideDown 1s ease-out;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Fade effect for carousel */
+  .fade-carousel {
+    position: relative;
+  }
+  .carousel-slide.fade {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  .carousel-slide.fade.active {
+    opacity: 1;
+    position: relative;
+  }
+  
+  /* Landing Page Container */
+  .landing-container {
     display: flex;
-    height: 100vh;  /* Full screen height */
+    height: 100vh;
     width: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    position: relative; /* So we can place absolutely positioned elements within it */
-}
-
-/* Left Section */
-.left-section {
+    position: relative;
+  }
+  
+  /* Left Section */
+  .left-section {
     width: 50%;
     background-color: white;
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: flex-start;  /* Align illustration near the top */
+    align-items: flex-start;
     overflow: hidden;
-}
-
-/* Center the illustration horizontally, near the top vertically */
-.left-section img {
-    max-width: 80%;
-    height: auto;
-    object-fit: contain;
-    margin-top: 20px;  /* optional small gap from the top if needed */
-}
-
-/* Right Section */
-.right-section {
+  }
+  
+  /* Right Section */
+  .right-section {
     width: 50%;
     background: white;
     display: flex;
@@ -45,21 +71,20 @@ body {
     align-items: center;
     text-align: center;
     position: relative;
-    /* Remove extra padding if you want the content near the top as well */
-}
-
-/* Buttons at Top Right - absolutely positioned relative to the container */
-.buttons-container {
+  }
+  
+  /* Top Right Buttons */
+  .buttons-container {
     position: absolute;
-    top: 20px;   /* 20px from the very top of the page/container */
-    right: 20px; /* 20px from the right edge */
+    top: 20px;
+    right: 20px;
     display: flex;
     gap: 10px;
-    z-index: 999; /* Ensure buttons appear on top */
-}
-
-/* Button Styling */
-.btn {
+    z-index: 999;
+  }
+  
+  /* Buttons */
+  .btn {
     background: #007bff;
     color: white;
     border: none;
@@ -70,125 +95,103 @@ body {
     font-weight: bold;
     transition: background 0.3s, transform 0.2s;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.signup-btn {
+  }
+  .signup-btn {
     background: #28a745;
-}
-
-.login-btn {
-    background: #17a2b8;
-}
-
-/* Hover & Click Effects */
-.btn:hover {
+  }
+  .btn:hover {
     opacity: 0.9;
     transform: scale(1.05);
-}
-
-.btn:active {
+  }
+  .btn:active {
     transform: scale(0.95);
-}
-.content h1 {
+  }
+  
+  /* Text Content */
+  .content h1 {
     font-size: 2.4rem;
     text-align: left;
-    margin-bottom: 1rem;
     color: #333;
-}
-
-.content p {
+  }
+  .content p {
     font-size: 1.2rem;
     text-align: justify;
     color: #555;
     max-width: 500px;
     margin: 0 auto;
-}
-
-/* Carousel or additional images remain unchanged */
-.carousel-dots {
+  }
+  
+  /* Carousel Dots */
+  .carousel-dots {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 5px;
     margin-top: 10px;
     position: absolute;
-    bottom: 10px; /* ✨ Stick it to the bottom of carousel */
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
   }
-  
-.dot {
+  .dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
     background-color: #bbb;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-.dot.active {
+  }
+  .dot.active {
     background-color: #333;
-}
-.carousel-image {
-    width: 60%;           /* reduced from 80% */
-    height: auto;
-    max-height: 800px;    /* reduced from 800px */
-    object-fit: contain;
-    border-radius: 10px;
-    margin: auto;
-}
-
-.carousel {
-    padding-top: 20px;
+  }
+  
+  /* Carousel Size */
+  .carousel {
+    padding-top: 60px;
     width: 100%;
-    height: 85%;
+    height: 80%;
     overflow: hidden;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* ✨ Keep image and dots stacked */
+    justify-content: flex-start;
   }
-  
-  
-  .carousel-track {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.8s ease-in-out;
-  }
-  
   .carousel-slide {
-    min-width: 100%;
-    height: 100%;
+    margin-top: 30px;
+    max-height: 500px;
+    width: 80%;
     object-fit: contain;
     display: block;
+    margin: 0 auto;
   }
   
-  
-/* Responsive Design */
-@media (max-width: 768px) {
+  /* Responsive Design */
+  @media (max-width: 768px) {
     .landing-container {
-        flex-direction: column;
-        height: auto; /* let content dictate height on small screens */
+      flex-direction: column;
+      height: auto;
     }
-    .left-section, .right-section {
-        width: 100%;
-        height: auto;
-        align-items: center; /* center on smaller screens if desired */
+    .left-section,
+    .right-section {
+      width: 100%;
+      height: auto;
+      align-items: center;
     }
     .buttons-container {
-        top: 10px;
-        right: 10px;
-        flex-direction: column;
+      top: 10px;
+      right: 10px;
+      flex-direction: column;
     }
     .btn {
-        width: 100%;
-        text-align: center;
+      width: 100%;
+      text-align: center;
     }
     .content h1 {
-        font-size: 1.8rem;
+      font-size: 1.8rem;
     }
     .content p {
-        font-size: 1rem;
+      font-size: 1rem;
     }
-}
+  }
+  

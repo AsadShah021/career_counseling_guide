@@ -74,7 +74,9 @@ const AdminDashboard = () => {
         alert("✅ Admin deleted successfully.");
         fetchAdmins();
       } catch (error) {
-        const message = error?.response?.data?.message || `Error code: ${error.response?.status}`;
+        const message =
+          error?.response?.data?.message ||
+          `Error code: ${error.response?.status}`;
         console.error("Admin Delete Error:", error);
         alert(`❌ Failed to delete admin: ${message}`);
       }
@@ -90,7 +92,8 @@ const AdminDashboard = () => {
     const contact = contacts.find((c) => c._id === id);
     if (!message) return alert("Please type a reply.");
 
-    const composedMessage = `Dear User,\n\nWe are from Career Counseling Support.\n\nYour original message:\n"${contact.message}"\n\nOur response:\n${message}`;
+    const composedMessage = message; // Only admin reply gets stored
+
 
     try {
       const res = await axios.post("http://localhost:5000/api/contact/reply", {
@@ -114,7 +117,10 @@ const AdminDashboard = () => {
   };
 
   const handleDeleteMessage = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this contact message?")) return;
+    if (
+      !window.confirm("Are you sure you want to delete this contact message?")
+    )
+      return;
 
     try {
       const res = await axios.delete(`http://localhost:5000/api/contact/${id}`);
@@ -137,35 +143,20 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      <img
-        src={logoutIcon}
-        alt="Logout"
-        title="Logout"
-        onClick={handleLogout}
-        style={{
-          position: "absolute",
-          top: "15px",
-          right: "20px",
-          width: "30px",
-          height: "30px",
-          cursor: "pointer",
-        }}
-      />
-
-      <div className="top-bar">
-        <h1 className="dashboard-title">Admin Dashboard</h1>
-        <div>
-          <button className="auth-btn signup-btn" onClick={() => navigate("/admin/signup")}>
-            Admin Signup
-          </button>
-          <button
-            className="auth-btn"
-            onClick={() => navigate("/home")}
-            style={{ marginLeft: "10px", backgroundColor: "#008080", color: "white" }}
-          >
-            Login as User
-          </button>
-        </div>
+      <div className="top-controls">
+        <button
+          className="auth-btn signup-btn"
+          onClick={() => navigate("/admin/signup")}
+        >
+          Admin Signup
+        </button>
+        <img
+          src={logoutIcon}
+          alt="Logout"
+          title="Logout"
+          onClick={handleLogout}
+          className="logout-icon"
+        />
       </div>
 
       <h2 className="section-heading">📋 Registered Users</h2>
@@ -185,7 +176,10 @@ const AdminDashboard = () => {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>
-                <button className="delete-btn" onClick={() => handleDeleteUser(user._id)}>
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDeleteUser(user._id)}
+                >
                   🗑️
                 </button>
               </td>
@@ -211,7 +205,10 @@ const AdminDashboard = () => {
               <td>{admin.name}</td>
               <td>{admin.email}</td>
               <td>
-                <button className="delete-btn" onClick={() => handleDeleteAdmin(admin._id)}>
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDeleteAdmin(admin._id)}
+                >
                   🗑️
                 </button>
               </td>
@@ -260,13 +257,17 @@ const AdminDashboard = () => {
                       className="reply-textarea"
                       rows="4"
                       value={reply[contact._id] || ""}
-                      onChange={(e) => handleReplyChange(contact._id, e.target.value)}
+                      onChange={(e) =>
+                        handleReplyChange(contact._id, e.target.value)
+                      }
                       placeholder="Type reply here"
                     ></textarea>
                     <br />
                     <button
                       className="auth-btn user-btn"
-                      onClick={() => handleSendReply(contact.email, contact._id)}
+                      onClick={() =>
+                        handleSendReply(contact.email, contact._id)
+                      }
                       style={{ marginTop: "5px" }}
                     >
                       Send Reply
@@ -286,61 +287,60 @@ const AdminDashboard = () => {
         {loading ? (
           <div className="loader-message">
             <div className="spinner"></div>
-            <p style={{ marginTop: "10px" }}>🔄 Predicting merit... please wait</p>
+            <p style={{ marginTop: "10px" }}>
+              🔄 Predicting merit... please wait
+            </p>
           </div>
         ) : (
-          <form
-            onSubmit={async (e) => {
-              e.preventDefault();
-              const file = e.target.file.files[0];
-              const year = e.target.year.value;
+          <div className="predict-form-container">
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const file = e.target.file.files[0];
+                const year = e.target.year.value;
 
-              if (!file || !year) {
-                return alert("Please select a file and enter the year.");
-              }
-
-              const formData = new FormData();
-              formData.append("file", file);
-              formData.append("year", year);
-              setLoading(true);
-
-              try {
-                const res = await axios.post("http://localhost:5000/api/predict-merit", formData);
-                alert(`✅ Merit prediction completed successfully for ${year}.`);
-              } catch (err) {
-                if (err.response?.status === 409) {
-                  alert(`⚠️ Prediction for year ${year} already exists.`);
-                } else {
-                  alert("❌ Prediction failed. Please try again.");
-                  console.error(err);
+                if (!file || !year) {
+                  return alert("Please select a file and enter the year.");
                 }
-              } finally {
-                setLoading(false);
-                e.target.reset();
-              }
-            }}
-          >
-            <input type="file" name="file" accept=".csv,.xlsx" required />
-            <input
-              type="number"
-              name="year"
-              placeholder="Enter year to predict (e.g. 2026)"
-              required
-              style={{ marginLeft: "10px", padding: "5px", width: "180px" }}
-            />
-            <button
-              type="submit"
-              className="auth-btn"
-              style={{
-                marginLeft: "10px",
-                backgroundColor: "#4CAF50",
-                color: "white",
-                padding: "6px 12px",
+
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("year", year);
+                setLoading(true);
+
+                try {
+                  const res = await axios.post(
+                    "http://localhost:5000/api/predict-merit",
+                    formData
+                  );
+                  alert(
+                    `✅ Merit prediction completed successfully for ${year}.`
+                  );
+                } catch (err) {
+                  if (err.response?.status === 409) {
+                    alert(`⚠️ Prediction for year ${year} already exists.`);
+                  } else {
+                    alert("❌ Prediction failed. Please try again.");
+                    console.error(err);
+                  }
+                } finally {
+                  setLoading(false);
+                  e.target.reset();
+                }
               }}
             >
-              Predict Merit
-            </button>
-          </form>
+              <input type="file" name="file" accept=".csv,.xlsx" required />
+              <input
+                type="number"
+                name="year"
+                placeholder="Enter year to predict (e.g. 2026)"
+                required
+              />
+              <button type="submit" className="auth-btn green-btn">
+                Predict Merit
+              </button>
+            </form>
+          </div>
         )}
       </div>
     </div>

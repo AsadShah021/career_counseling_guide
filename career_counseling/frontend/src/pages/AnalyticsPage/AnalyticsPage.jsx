@@ -11,7 +11,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import Footer from "../../components/Footer"; // ✅ Make sure this path is correct
 import "./AnalyticsPage.css";
 
 ChartJS.register(
@@ -153,8 +152,6 @@ const AnalyticsPage = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

@@ -13,7 +13,18 @@ const HomePage = () => {
   const [activeFaq, setActiveFaq] = useState(null);
   const [formErrors, setFormErrors] = useState({});
   const dropdownRef = useRef(null);
-
+  useEffect(() => {
+    const injectScript = (src) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.async = true;
+      document.body.appendChild(script);
+    };
+  
+    injectScript("https://cdn.botpress.cloud/webchat/v2.3/inject.js");
+    injectScript("https://files.bpcontent.cloud/2024/12/17/17/20241217175556-HADFQT9L.js");
+  }, []);
+  
   useEffect(() => {
     const dropdown = dropdownRef.current;
     if (dropdown) {
@@ -151,7 +162,10 @@ const HomePage = () => {
         <div className="left-section">
           <div className="input-form">
             <div ref={dropdownRef} title="Select any field of your interest">
-              <DropdownFields onFieldSelect={handleFieldSelect} />
+              <DropdownFields
+                onFieldSelect={handleFieldSelect}
+                selectedField={selectedField}
+              />
               {formErrors.selectedField && (
                 <p className="error-msg">{formErrors.selectedField}</p>
               )}
@@ -261,7 +275,22 @@ const HomePage = () => {
             >
               ✖
             </button>
+
             <h2>Recommended Universities</h2>
+
+            {/* ✅ Show Merit on Top */}
+            {calculatedMerit && (
+              <p
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  marginBottom: "15px",
+                }}
+              >
+                Your Calculated Merit: {calculatedMerit}%
+              </p>
+            )}
+
             {universityList.length > 0 ? (
               universityList.map((uni, index) => (
                 <div key={index} className="university-item">
@@ -271,7 +300,16 @@ const HomePage = () => {
                     className="university-logo"
                   />
                   <div className="university-info">
-                    <h3>{uni.Institution_Name}</h3>
+                    <h3>
+                      {uni.Institution_Name} –{" "}
+                      <span style={{ fontWeight: "normal" }}>
+                        {uni.Field_of_Study}
+                      </span>
+                    </h3>
+                    <p style={{ margin: "8px 0", color: "#333" }}>
+                      <strong>Required Merit:</strong>{" "}
+                      {parseFloat(uni.Merit_2025).toFixed(2)}%
+                    </p>
                     <button
                       className="visit-btn"
                       onClick={() => window.open(uni.Admission_Link, "_blank")}
@@ -285,6 +323,7 @@ const HomePage = () => {
               <p className="no-results">No matching universities found.</p>
             )}
 
+            {/* Alternate Suggestions (unchanged) */}
             {alternateSuggestions.length > 0 && (
               <div className="alternate-fields">
                 <h3>Explore Other Fields Based on Your Merit</h3>
@@ -297,7 +336,7 @@ const HomePage = () => {
                     />
                     <div className="university-info">
                       <h4>
-                        {alt.Institution_Name} - {alt.Field_of_Study}
+                        {alt.Institution_Name} – {alt.Field_of_Study}
                       </h4>
                       <p>Required Merit: {alt.Merit_2025}%</p>
                       <button
