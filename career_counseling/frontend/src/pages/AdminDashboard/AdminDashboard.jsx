@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 import "./AdminDashboard.css";
 import logoutIcon from "../../assets/logout-icon.png";
 
@@ -49,37 +50,60 @@ const AdminDashboard = () => {
   };
 
   const handleDeleteUser = async (id) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      try {
-        const res = await fetch(`http://localhost:5000/api/users/${id}`, {
-          method: "DELETE",
-        });
-        if (res.ok) fetchUsers();
-        else alert("Failed to delete user.");
-      } catch (error) {
-        console.error("Delete User Error:", error);
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You are about to delete this user.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/users/${id}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        Swal.fire("Deleted!", "User has been deleted.", "success");
+        fetchUsers();
+      } else {
+        Swal.fire("Failed!", "Failed to delete user.", "error");
       }
+    } catch (error) {
+      console.error("Delete User Error:", error);
+      Swal.fire("Error!", "An error occurred.", "error");
     }
   };
 
   const handleDeleteAdmin = async (id) => {
     if (admins.length <= 1) {
-      alert("⚠️ Cannot delete the last remaining admin.");
+      Swal.fire("Warning!", "Cannot delete the last remaining admin.", "warning");
       return;
     }
 
-    if (window.confirm("Are you sure you want to delete this admin account?")) {
-      try {
-        const res = await axios.delete(`http://localhost:5000/api/admin/${id}`);
-        alert("✅ Admin deleted successfully.");
-        fetchAdmins();
-      } catch (error) {
-        const message =
-          error?.response?.data?.message ||
-          `Error code: ${error.response?.status}`;
-        console.error("Admin Delete Error:", error);
-        alert(`❌ Failed to delete admin: ${message}`);
-      }
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You are about to delete this admin account.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (!result.isConfirmed) return;
+
+    try {
+      await axios.delete(`http://localhost:5000/api/admin/${id}`);
+      Swal.fire("Deleted!", "Admin has been removed.", "success");
+      fetchAdmins();
+    } catch (error) {
+      const message = error?.response?.data?.message || `Error code: ${error.response?.status}`;
+      console.error("Admin Delete Error:", error);
+      Swal.fire("Failed!", message, "error");
     }
   };
 
@@ -89,50 +113,53 @@ const AdminDashboard = () => {
 
   const handleSendReply = async (email, id) => {
     const message = reply[id]?.trim();
-    const contact = contacts.find((c) => c._id === id);
-    if (!message) return alert("Please type a reply.");
-
-    const composedMessage = message; // Only admin reply gets stored
-
+    if (!message) return Swal.fire("Error", "Please type a reply.", "warning");
 
     try {
       const res = await axios.post("http://localhost:5000/api/contact/reply", {
         email,
-        message: composedMessage,
+        message,
         contactId: id,
         replyMessage: message,
       });
 
       if (res.status === 200) {
-        alert("Reply sent successfully!");
+        Swal.fire("Success!", "Reply sent successfully.", "success");
         setReply((prev) => ({ ...prev, [id]: "" }));
         fetchContacts();
       } else {
-        alert("Failed to send reply");
+        Swal.fire("Failed!", "Could not send reply.", "error");
       }
     } catch (error) {
       console.error("Send Reply Error:", error);
-      alert("Error sending reply");
+      Swal.fire("Error!", "An error occurred while sending.", "error");
     }
   };
 
   const handleDeleteMessage = async (id) => {
-    if (
-      !window.confirm("Are you sure you want to delete this contact message?")
-    )
-      return;
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You are about to delete this contact message.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (!result.isConfirmed) return;
 
     try {
       const res = await axios.delete(`http://localhost:5000/api/contact/${id}`);
       if (res.status === 200) {
-        alert("Contact message deleted successfully!");
+        Swal.fire("Deleted!", "Contact message has been deleted.", "success");
         fetchContacts();
       } else {
-        alert("Failed to delete message");
+        Swal.fire("Failed!", "Could not delete message.", "error");
       }
     } catch (error) {
       console.error("Delete Message Error:", error);
-      alert("Error deleting message");
+      Swal.fire("Error!", "An error occurred.", "error");
     }
   };
 
@@ -144,10 +171,7 @@ const AdminDashboard = () => {
   return (
     <div className="admin-dashboard">
       <div className="top-controls">
-        <button
-          className="auth-btn signup-btn"
-          onClick={() => navigate("/admin/signup")}
-        >
+        <button className="auth-btn signup-btn" onClick={() => navigate("/admin/signup")}>
           Admin Signup
         </button>
         <img
@@ -176,10 +200,7 @@ const AdminDashboard = () => {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDeleteUser(user._id)}
-                >
+                <button className="delete-btn" onClick={() => handleDeleteUser(user._id)}>
                   🗑️
                 </button>
               </td>
@@ -205,10 +226,7 @@ const AdminDashboard = () => {
               <td>{admin.name}</td>
               <td>{admin.email}</td>
               <td>
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDeleteAdmin(admin._id)}
-                >
+                <button className="delete-btn" onClick={() => handleDeleteAdmin(admin._id)}>
                   🗑️
                 </button>
               </td>
@@ -257,17 +275,13 @@ const AdminDashboard = () => {
                       className="reply-textarea"
                       rows="4"
                       value={reply[contact._id] || ""}
-                      onChange={(e) =>
-                        handleReplyChange(contact._id, e.target.value)
-                      }
+                      onChange={(e) => handleReplyChange(contact._id, e.target.value)}
                       placeholder="Type reply here"
                     ></textarea>
                     <br />
                     <button
                       className="auth-btn user-btn"
-                      onClick={() =>
-                        handleSendReply(contact.email, contact._id)
-                      }
+                      onClick={() => handleSendReply(contact.email, contact._id)}
                       style={{ marginTop: "5px" }}
                     >
                       Send Reply
@@ -280,16 +294,12 @@ const AdminDashboard = () => {
         </tbody>
       </table>
 
-      {/* 🔮 Predict Merit Section */}
       <div className="predict-merit-section">
         <h2 className="section-heading">🔮 Predict University Merit</h2>
-
         {loading ? (
           <div className="loader-message">
             <div className="spinner"></div>
-            <p style={{ marginTop: "10px" }}>
-              🔄 Predicting merit... please wait
-            </p>
+            <p style={{ marginTop: "10px" }}>🔄 Predicting merit... please wait</p>
           </div>
         ) : (
           <div className="predict-form-container">
@@ -300,7 +310,7 @@ const AdminDashboard = () => {
                 const year = e.target.year.value;
 
                 if (!file || !year) {
-                  return alert("Please select a file and enter the year.");
+                  return Swal.fire("Error!", "Please select a file and enter a year.", "warning");
                 }
 
                 const formData = new FormData();
@@ -313,15 +323,12 @@ const AdminDashboard = () => {
                     "http://localhost:5000/api/predict-merit",
                     formData
                   );
-                  alert(
-                    `✅ Merit prediction completed successfully for ${year}.`
-                  );
+                  Swal.fire("Done!", `Prediction for ${year} is completed.`, "success");
                 } catch (err) {
                   if (err.response?.status === 409) {
-                    alert(`⚠️ Prediction for year ${year} already exists.`);
+                    Swal.fire("Duplicate", `Prediction for ${year} already exists.`, "warning");
                   } else {
-                    alert("❌ Prediction failed. Please try again.");
-                    console.error(err);
+                    Swal.fire("Error", "Prediction failed. Try again later.", "error");
                   }
                 } finally {
                   setLoading(false);

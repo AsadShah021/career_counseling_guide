@@ -1,41 +1,33 @@
-body{
+body {
     overflow-x: hidden;
 }
+
 /* Full-Screen Layout */
 .about-us-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: auto; /* changed from 100vh to allow scroll */
+    min-height: 100vh;
     width: 100vw;
-    background: url("../assets/image.png") center/cover no-repeat, #ffffff; /* Full-page background */
-    
-
-
+    background: url("../assets/image.png") center/cover no-repeat, #ffffff;
 }
 
 /* About Us Content Container */
 .about-container {
     max-width: 1000px;
     width: 100%;
-    padding: 40px;
+    padding: 100px 40px 40px; /* ✅ Added top padding to offset fixed navbar */
     border-radius: 10px;
-  
-    /* Single smaller image centered both horizontally & vertically, no repeat */
+
     background: url("/image.png") no-repeat center center;
-  
-    /* Fixed size so it doesn't fill entire container */
-    background-size: 250px auto;  /* adjust 240px as needed */
-  
-    /* Light overlay for readability (optional) */
+    background-size: 250px auto;
     background-color: rgba(255, 255, 255, 0.9);
-  }
-  
-  
+}
 
 /* About Us Title */
 .about-title {
-    font-size: 3rem; /* Increased font size */
+    font-size: 3rem;
     font-weight: bold;
     text-align: left;
     margin-bottom: 20px;
@@ -43,16 +35,16 @@ body{
 
 /* Paragraph Styling */
 .about-container p {
-    font-size: 1.1rem; /* Increased font size */
+    font-size: 1.1rem;
     line-height: 1.8;
     text-align: justify;
-    color: #222; /* Darker text for readability */
+    color: #222;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
     .about-container {
-        padding: 30px;
+        padding: 4px; /* smaller top padding for mobile */
     }
 
     .about-title {

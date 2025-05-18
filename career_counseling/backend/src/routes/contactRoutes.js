@@ -47,6 +47,11 @@ router.post("/reply", async (req, res) => {
   }
 
   try {
+    const contact = await Contact.findById(contactId);
+    if (!contact) {
+      return res.status(404).json({ message: "Original contact message not found" });
+    }
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -55,11 +60,38 @@ router.post("/reply", async (req, res) => {
       },
     });
 
+    const composedEmail = `
+Hello ${contact.name},
+
+This is a response to your message:
+
+🟡 Your Message:
+----------------
+${contact.message}
+
+🟢 Admin Reply:
+----------------
+${message}
+
+Regards,  
+Career Guide Admin Team
+    `;
+
     await transporter.sendMail({
       from: `"Admin Team" <${process.env.EMAIL_USER}>`,
       to: email,
-      subject: "Reply from Admin Team",
-      text: message,
+      subject: "Reply to Your Career Guide Message",
+      text: composedEmail,
+      html: `
+        <p>Hello <strong>${contact.name}</strong>,</p>
+        <p>This is a response to your message:</p>
+        <hr/>
+        <p><strong> Your Message:</strong><br/>${contact.message}</p>
+        <hr/>
+        <p><strong> Admin Reply:</strong><br/>${message}</p>
+        <br/>
+        <p>Regards,<br/><strong>Career Guide Admin Team</strong></p>
+      `
     });
 
     await Contact.findByIdAndUpdate(contactId, {

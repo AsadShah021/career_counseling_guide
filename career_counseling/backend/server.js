@@ -4,6 +4,7 @@ const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
 const { spawn } = require("child_process");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const app = express();
@@ -31,11 +32,18 @@ const authRoutes = require("./src/routes/authRoutes");
 const contactRoutes = require("./src/routes/contactRoutes");
 const userRoutes = require("./src/routes/userRoutes");
 const adminRoutes = require("./src/routes/adminRoutes");
+const emailVerificationRoutes = require("./src/routes/emailVerification");
+const passwordResetRoutes = require("./src/routes/passwordReset");
+const adminVerificationRoutes = require("./src/routes/adminVerification"); // ✅ FIXED
 
+// ✅ Use Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/auth", emailVerificationRoutes); // ✅ FIXED
+app.use("/api/auth", passwordResetRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/admin", adminVerificationRoutes); // ✅ FIXED
 
 // ✅ Health Check
 app.get("/", (req, res) => {
@@ -43,8 +51,6 @@ app.get("/", (req, res) => {
 });
 
 // ✅ Email Test Route
-const nodemailer = require("nodemailer");
-
 app.get("/api/contact/test-mail", async (req, res) => {
   try {
     const transporter = nodemailer.createTransport({

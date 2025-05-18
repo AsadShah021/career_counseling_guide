@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Landing from "./pages/LandingPage/Landing";
 import HomePage from "./pages/HomePage/HomePage";
@@ -8,7 +10,7 @@ import AnalyticsPage from "./pages/AnalyticsPage/AnalyticsPage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import ContactPage from "./pages/ContactPage/ContactPage";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
-import AdminSignUp from "./pages/AdminSignUp/AdminSignUp"; // ✅ Added admin signup route
+import AdminSignUp from "./pages/AdminSignUp/AdminSignUp";
 
 import LayoutWithFooter from "./components/LayoutWithFooter";
 
@@ -44,7 +46,7 @@ const App = () => {
 
           {/* Public Admin Routes */}
           <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/admin/signup" element={<AdminSignUp />} /> {/* ✅ New route */}
+          <Route path="/admin/signup" element={<AdminSignUp />} />
 
           {/* Protected Routes with Footer */}
           <Route element={<LayoutWithFooter isAuthenticated={isAuthenticated} />}>
@@ -66,6 +68,9 @@ const App = () => {
             />
           </Route>
         </Routes>
+
+        {/* Global Toast Notifications */}
+        <ToastContainer position="top-right" autoClose={3000} />
       </Router>
     </GoogleOAuthProvider>
   );
