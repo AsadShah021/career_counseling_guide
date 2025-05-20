@@ -4,13 +4,15 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import "./AdminDashboard.css";
 import logoutIcon from "../../assets/logout-icon.png";
+import AdminSignUp from "../AdminSignUp/AdminSignUp"; // adjust relative path as needed
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [admins, setAdmins] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [reply, setReply] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -171,7 +173,8 @@ const AdminDashboard = () => {
   return (
     <div className="admin-dashboard">
       <div className="top-controls">
-        <button className="auth-btn signup-btn" onClick={() => navigate("/admin/signup")}>
+
+        <button className="auth-btn signup-btn" onClick={() => setShowModal(true)}>
           Admin Signup
         </button>
         <img
@@ -350,6 +353,11 @@ const AdminDashboard = () => {
           </div>
         )}
       </div>
+
+      {/* Modal rendering */}
+      {showModal && (
+        <AdminSignUp onClose={() => setShowModal(false)} />
+      )}
     </div>
   );
 };

@@ -11,6 +11,10 @@
   "license": "ISC",
   "type": "commonjs",
   "description": "",
+"engines": {
+"node": "v22.12.0",
+"npm": "11.0.0"
+},
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
@@ -23,4 +27,5 @@
     "nodemailer": "^7.0.3",
     "nodemon": "^3.1.10"
   }
+  
 }

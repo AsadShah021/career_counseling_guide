@@ -126,11 +126,33 @@ const Login = ({ onClose, setIsAuthenticated }) => {
               <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder=" " required />
               <label>Email address</label>
             </div>
-            <div className="form-group password-group">
-              <input type={showPassword ? "text" : "password"} name="password" value={formData.password} onChange={handleChange} placeholder=" " required />
-              <label>Password</label>
-              <img src={showPassword ? eyeVisible : eyeHidden} alt="Toggle Password" className="toggle-eye" onClick={() => setShowPassword(!showPassword)} />
-            </div>
+<div className="form-group password-group" style={{ position: "relative" }}>
+  <input
+    type={showPassword ? "text" : "password"}
+    name="password"
+    value={formData.password}
+    onChange={handleChange}
+    placeholder=" "
+    required
+  />
+  <label>Password</label>
+  <img
+    src={showPassword ? eyeVisible : eyeHidden}
+    alt="Toggle Password"
+    className="toggle-eye"
+    onClick={() => setShowPassword(!showPassword)}
+    style={{
+      position: "absolute",
+      top: "50%",
+      right: "10px",
+      transform: "translateY(-50%)",
+      cursor: "pointer",
+      width: "20px",
+      height: "20px"
+    }}
+  />
+</div>
+
             <p className="forgot-link" onClick={() => setShowForgot(true)}>Forgot Password?</p>
             <button type="submit" className="btn-submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
           </form>

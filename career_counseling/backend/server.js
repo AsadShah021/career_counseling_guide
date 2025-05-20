@@ -1,3 +1,4 @@
+/* server.js */
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -9,48 +10,50 @@ require("dotenv").config();
 
 const app = express();
 
-// ✅ Debug: Environment variable checks
+// 🔍 Debug: Environment variables
+console.log("✅ DATABASE_URL:", process.env.DATABASE_URL ? "Loaded" : "❌ Missing");
 console.log("✅ EMAIL_USER:", process.env.EMAIL_USER ? "Loaded" : "❌ Missing");
 console.log("✅ EMAIL_PASS:", process.env.EMAIL_PASS ? "Loaded" : "❌ Missing");
 console.log("✅ GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID ? "Loaded" : "❌ Missing");
+console.log("✅ PORT:", process.env.PORT ? process.env.PORT : "Not set, using default 5000");
 
-// ✅ Middleware
+// 📦 Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// ✅ MongoDB Connection
-mongoose.connect(process.env.DATABASE_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+// 🌐 MongoDB Connection
+mongoose
+  .connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("✅ MongoDB Connected Successfully"))
   .catch((error) => console.error("❌ MongoDB Connection Failed:", error));
 
-// ✅ Import Routes
+// 🚦 Routes
 const authRoutes = require("./src/routes/authRoutes");
+const emailVerificationRoutes = require("./src/routes/emailVerification");
+const passwordResetRoutes = require("./src/routes/passwordReset");
 const contactRoutes = require("./src/routes/contactRoutes");
 const userRoutes = require("./src/routes/userRoutes");
 const adminRoutes = require("./src/routes/adminRoutes");
-const emailVerificationRoutes = require("./src/routes/emailVerification");
-const passwordResetRoutes = require("./src/routes/passwordReset");
-const adminVerificationRoutes = require("./src/routes/adminVerification"); // ✅ FIXED
+const adminVerificationRoutes = require("./src/routes/adminVerification");
 
-// ✅ Use Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/auth", emailVerificationRoutes); // ✅ FIXED
+app.use("/api/auth", emailVerificationRoutes);
 app.use("/api/auth", passwordResetRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/admin", adminVerificationRoutes); // ✅ FIXED
+app.use("/api/admin", adminVerificationRoutes);
 
-// ✅ Health Check
+// ⚙️ Health Check
 app.get("/", (req, res) => {
   res.send("🚀 API is running");
 });
 
-// ✅ Email Test Route
+// 📧 Test Email Route
 app.get("/api/contact/test-mail", async (req, res) => {
   try {
     const transporter = nodemailer.createTransport({
@@ -75,7 +78,7 @@ app.get("/api/contact/test-mail", async (req, res) => {
   }
 });
 
-// ✅ Predict Merit Route
+// 🧮 Predict Merit Route
 const upload = multer({ dest: "uploads/" });
 
 app.post("/api/predict-merit", upload.single("file"), (req, res) => {
@@ -88,9 +91,7 @@ app.post("/api/predict-merit", upload.single("file"), (req, res) => {
   let errorOccurred = false;
 
   python.stdout.on("data", (data) => {
-    const output = data.toString().trim();
-    console.log("🟢 Python Output:", output);
-    result += output;
+    result += data.toString().trim();
   });
 
   python.stderr.on("data", (data) => {
@@ -102,7 +103,8 @@ app.post("/api/predict-merit", upload.single("file"), (req, res) => {
     if (code === 0 && !errorOccurred) {
       if (result.includes("already exists")) {
         return res.status(409).json({ message: `Prediction for year ${year} already exists.` });
-      } else if (result.includes("invalid year")) {
+      }
+      if (result.includes("invalid year")) {
         return res.status(400).json({ message: `Invalid year. Only ${parseInt(year) - 1 + 1} is allowed.` });
       }
 
@@ -110,15 +112,14 @@ app.post("/api/predict-merit", upload.single("file"), (req, res) => {
       return res.status(200).json({
         message: `✅ Merit prediction completed successfully for ${year}.`,
         savedTo: outputPath,
-        url: "/data/Merit_Predictions.json"
+        url: "/data/Merit_Predictions.json",
       });
-    } else {
-      return res.status(500).json({ error: "❌ Prediction script failed." });
     }
+    res.status(500).json({ error: "❌ Prediction script failed." });
   });
 });
 
-// ✅ Start Server
+// 🚀 Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);

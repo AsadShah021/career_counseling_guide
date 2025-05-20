@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
+import * as jwtLib from "jwt-decode";
+const jwtDecode = jwtLib.default || jwtLib;
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import eyeVisible from "../../assets/eye-visible.png";
-import eyeHidden from "../../assets/eye-hidden.png";
 import "./AdminSignUp.css";
 
 const AdminSignUp = ({ onClose }) => {
@@ -15,7 +14,6 @@ const AdminSignUp = ({ onClose }) => {
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -28,24 +26,25 @@ const AdminSignUp = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("");
 
     if (step === 1) {
       const { name, email, password } = formData;
-
       if (!name.trim()) return setMessage("Name is required.");
       if (!isValidEmail(email)) return setMessage("Invalid email format.");
-      if (!isStrongPassword(password)) return setMessage("Password must be 8+ characters with uppercase, lowercase, and number.");
-      if (hasSQLInjectionChars(name) || hasSQLInjectionChars(email) || hasSQLInjectionChars(password)) return setMessage("Suspicious input detected.");
+      if (!isStrongPassword(password))
+        return setMessage(
+          "Password must be 8+ chars, including uppercase, lowercase & number."
+        );
+      if (hasSQLInjectionChars(name + email + password))
+        return setMessage("Suspicious input detected.");
 
       setLoading(true);
-      setMessage("");
-
       try {
-        const res = await axios.post("http://localhost:5000/api/admin/request-verification", {
-          name,
-          email,
-          password
-        });
+        const res = await axios.post(
+          "http://localhost:5000/api/admin/request-verification",
+          { name, email, password, role: "admin" }
+        );
         if (res.data.success) {
           toast.success("Verification code sent to your email.");
           setStep(2);
@@ -58,18 +57,17 @@ const AdminSignUp = ({ onClose }) => {
         setLoading(false);
       }
     } else {
+      setLoading(true);
       try {
-        setLoading(true);
-        const res = await axios.post("http://localhost:5000/api/admin/verify-code", {
-          email: formData.email,
-          code
-        });
-
+        const res = await axios.post(
+          "http://localhost:5000/api/admin/verify-code",
+          { email: formData.email, code, role: "admin" }
+        );
         if (res.data.success) {
           toast.success("Admin account created. Redirecting...");
           setTimeout(() => {
             navigate("/admin");
-            if (onClose) onClose();
+            onClose();
           }, 1500);
         } else {
           toast.error(res.data.message || "Verification failed.");
@@ -84,17 +82,17 @@ const AdminSignUp = ({ onClose }) => {
 
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      const decoded = jwtDecode(credentialResponse.credential);
-      const { email, name } = decoded;
-
-      await axios.post("http://localhost:5000/api/admin/google-signup", { email, name });
-
+      const { email, name } = jwtDecode(credentialResponse.credential);
+      await axios.post(
+        "http://localhost:5000/api/admin/google-signup",
+        { email, name, role: "admin" }
+      );
       toast.success("Google Admin signup successful! Redirecting...");
       setTimeout(() => {
         navigate("/admin-dashboard");
-        if (onClose) onClose();
+        onClose();
       }, 1500);
-    } catch (error) {
+    } catch {
       toast.error("Google signup failed.");
     }
   };
@@ -105,7 +103,6 @@ const AdminSignUp = ({ onClose }) => {
         <button type="button" className="close-btn" onClick={onClose}>
           &times;
         </button>
-
         <h2 className="modal-title">Admin Sign Up</h2>
 
         <form onSubmit={handleSubmit} className="modal-form">
@@ -135,9 +132,9 @@ const AdminSignUp = ({ onClose }) => {
                 <label>Email</label>
               </div>
 
-              <div className="form-group password-group">
+              <div className="form-group">
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
@@ -145,13 +142,6 @@ const AdminSignUp = ({ onClose }) => {
                   required
                 />
                 <label>Password</label>
-                <img
-                  src={showPassword ? eyeVisible : eyeHidden}
-                  alt="Toggle Password"
-                  className="toggle-eye"
-                  onClick={() => setShowPassword(!showPassword)}
-                  style={{ position: "absolute", top: "50%", right: "10px", transform: "translateY(-50%)", cursor: "pointer", width: "20px", height: "20px" }}
-                />
               </div>
 
               <button type="submit" className="btn-submit" disabled={loading}>
@@ -166,11 +156,12 @@ const AdminSignUp = ({ onClose }) => {
                   name="code"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  placeholder="Enter verification code"
+                  placeholder=" "
                   required
                 />
                 <label>Verification Code</label>
               </div>
+
               <button type="submit" className="btn-submit" disabled={loading}>
                 {loading ? "Verifying..." : "Verify & Sign Up"}
               </button>
@@ -179,7 +170,7 @@ const AdminSignUp = ({ onClose }) => {
         </form>
 
         {step === 1 && (
-          <div className="google-login" style={{ marginTop: "15px" }}>
+          <div className="google-login">
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={() => toast.error("Google signup failed.")}
