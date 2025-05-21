@@ -34,7 +34,7 @@ html, body {
 .chart-box {
   width: 100%;
   max-width: 1400px;
-  height: 40vh;
+  height: 60vh;               /* Increased height from 40vh to 60vh */
   background-color: #ffffff;
   padding: 20px;
   border-radius: 10px;
@@ -48,7 +48,7 @@ html, body {
 /* Chart wrapper */
 .chart-wrapper {
   width: 100%;
-  height: 80%;
+  height: 100%;               /* Fill full height of .chart-box */
 }
 
 .chart-wrapper canvas {

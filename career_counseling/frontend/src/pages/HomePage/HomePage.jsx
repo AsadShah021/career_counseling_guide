@@ -147,10 +147,9 @@ const HomePage = () => {
     }
   };
 
-  const getLogo = (institutionName) => {
-    const logoPath = universityLogos[institutionName];
-    return logoPath ? logoPath : "/assets/logo/default_logo.png";
-  };
+const getLogo = (institutionName) =>
+  universityLogos[institutionName] || universityLogos.default;
+
 
   const toggleFaq = (id) => {
     setActiveFaq((prev) => (prev === id ? null : id));
